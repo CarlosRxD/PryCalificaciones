@@ -1,6 +1,6 @@
 # PryCalificaciones
 
->[!IMPOR]
+>[!IMPORTANT]
 >**PryCalificaciones** es una aplicación móvil revolucionaria diseñada para que los alumnos de la UNPA puedan consultar sus calificaciones de manera rápida, sencilla y moderna. Con una >interfaz intuitiva y un rendimiento optimizado, esta app te permite estar siempre al día con tus notas y aprovechar al máximo tu experiencia académica.
 
 
