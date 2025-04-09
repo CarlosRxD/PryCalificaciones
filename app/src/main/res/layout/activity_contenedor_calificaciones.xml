@@ -7,11 +7,47 @@
     android:layout_height="match_parent"
     tools:context=".contenedorCalificaciones">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="412dp"
+        android:layout_height="58dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/lblGeneral4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/kkdvk"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/lblGeneral"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:gravity="center_vertical"
+            android:text="@string/lblCali"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/menuNav"
         android:layout_width="410dp"
         android:layout_height="68dp"
-        android:background="?attr/colorPrimary"
+        android:background="#86DE8E"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +59,18 @@
         android:layout_width="125dp"
         android:layout_height="68dp"
         android:layout_marginStart="5dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTint="#00050505"
+        android:fontFamily="sans-serif"
+        android:gravity="bottom|center_horizontal"
+        android:text="@string/btnNoti"
+        android:textColor="#000000"
+        android:textSize="10sp"
         app:cornerRadius="5dp"
+        app:icon="@android:drawable/ic_popup_reminder"
+        app:iconGravity="textTop"
+        app:iconSize="30sp"
+        app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:strokeColor="@color/black"
@@ -35,8 +82,18 @@
         android:layout_height="68dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Button"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTint="#00050505"
+        android:fontFamily="sans-serif"
+        android:gravity="bottom|center_horizontal"
+        android:text="@string/btnCali"
+        android:textColor="#000000"
+        android:textSize="10sp"
         app:cornerRadius="5dp"
+        app:icon="@android:drawable/ic_menu_view"
+        app:iconGravity="textTop"
+        app:iconSize="30sp"
+        app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button3"
         app:layout_constraintHorizontal_bias="0.454"
@@ -49,8 +106,18 @@
         android:layout_width="125dp"
         android:layout_height="68dp"
         android:layout_marginEnd="5dp"
-        android:text="Button"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTint="#00050505"
+        android:fontFamily="sans-serif"
+        android:gravity="bottom|center_horizontal"
+        android:text="@string/btnPerfil"
+        android:textColor="#000000"
+        android:textSize="10sp"
         app:cornerRadius="5dp"
+        app:icon="@android:drawable/ic_menu_myplaces"
+        app:iconGravity="textTop"
+        app:iconSize="30sp"
+        app:iconTint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:strokeColor="@color/black"
@@ -58,24 +125,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vistaCalificaciones"
-        android:layout_width="406dp"
-        android:layout_height="488dp"
+        android:layout_width="425dp"
+        android:layout_height="601dp"
         app:layout_constraintBottom_toTopOf="@+id/menuNav"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipFiltros" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <HorizontalScrollView
-        android:id="@+id/chipFiltros"
-        android:layout_width="407dp"
-        android:layout_height="176dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    </androidx.recyclerview.widget.RecyclerView>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
-    </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
