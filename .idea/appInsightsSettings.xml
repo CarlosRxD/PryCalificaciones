@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.unpa.calificaciones" />
-                  <option name="mobileSdkAppId" value="1:130082138514:android:e9d5ea759abf7bacf7394b" />
-                  <option name="projectId" value="app-calificaciones-e8014" />
-                  <option name="projectNumber" value="130082138514" />
+                  <option name="mobileSdkAppId" value="1:102056564892:android:cdb8be3f14835b267a3559" />
+                  <option name="projectId" value="prycalificaciones" />
+                  <option name="projectNumber" value="102056564892" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
