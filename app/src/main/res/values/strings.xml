@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">PryCalificaciones</string>
+    <string name="btnNoti">Notificaciones</string>
+    <string name="btnPerfil">Perfil</string>
+    <string name="btnCali">Calificaciones</string>
+    <string name="lblCali">Calificaciones</string>
+    <string name="lblPerfil">Perfil</string>
+    <string name="lblNoti">Notificaciones</string>
+    <string name="kkdvk">kkdvk</string>
 </resources>
