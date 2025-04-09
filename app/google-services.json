@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "130082138514",
-    "project_id": "app-calificaciones-e8014",
-    "storage_bucket": "app-calificaciones-e8014.firebasestorage.app"
+    "project_number": "102056564892",
+    "project_id": "prycalificaciones",
+    "storage_bucket": "prycalificaciones.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:130082138514:android:e9d5ea759abf7bacf7394b",
+        "mobilesdk_app_id": "1:102056564892:android:cdb8be3f14835b267a3559",
         "android_client_info": {
           "package_name": "com.unpa.calificaciones"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD3bCwaWVNyqYUJHePMx2PwqydwhM_J6uM"
+          "current_key": "AIzaSyDo-ISQT9FXNgCqKlKCknB0d1JWbyb_aqs"
         }
       ],
       "services": {
