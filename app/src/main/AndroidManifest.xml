@@ -14,7 +14,7 @@
         android:theme="@style/Theme.PryCalificaciones"
         tools:targetApi="31">
         <activity
-            android:name=".contenedorCalificaciones"
+            android:name=".ContenedorCalificaciones"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
