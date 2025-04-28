@@ -28,4 +28,10 @@ class MainActivity : AppCompatActivity() {
     fun main(){
         contenedorCalificaciones.obtenerPeriodoActual();
     }
+
+    override fun onStart() {
+        super.onStart()
+        val intento = Intent(this, ContenedorCalificaciones::class.java)
+        startActivity(intento);
+    }
 }

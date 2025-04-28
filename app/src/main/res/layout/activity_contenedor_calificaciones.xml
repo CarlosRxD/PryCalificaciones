@@ -5,9 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".contenedorCalificaciones">
+    tools:context=".ContenedorCalificaciones">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tvInfo"
         android:layout_width="412dp"
         android:layout_height="58dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,20 +19,23 @@
             android:id="@+id/lblGeneral4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginEnd="32dp"
             android:gravity="center_vertical"
-            android:text="@string/kkdvk"
+            android:text="8.5"
             android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/lblGeneral"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/lblGeneral"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="40dp"
             android:gravity="center_vertical"
             android:text="@string/lblCali"
             android:textColor="#000000"
@@ -39,97 +43,164 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- 2. ChipGroup dentro de un scroll horizontal -->
+    <HorizontalScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fillViewport="false"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@+id/tvInfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/menuNav"
-        android:layout_width="410dp"
-        android:layout_height="68dp"
-        android:background="#86DE8E"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupFilters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:singleLine="true"
+            app:chipSpacingHorizontal="8dp"
+            app:singleSelection="true"
+            app:selectionRequired="true">
 
-    <Button
-        android:id="@+id/btnNoti"
-        android:layout_width="125dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="5dp"
-        android:backgroundTint="#FFFFFF"
-        android:drawableTint="#00050505"
-        android:fontFamily="sans-serif"
-        android:gravity="bottom|center_horizontal"
-        android:text="@string/btnNoti"
-        android:textColor="#000000"
-        android:textSize="10sp"
-        app:cornerRadius="5dp"
-        app:icon="@android:drawable/ic_popup_reminder"
-        app:iconGravity="textTop"
-        app:iconSize="30sp"
-        app:iconTint="#000000"
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:checked="true"
+                android:text="Parcial 1" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Parcial 2" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Parcial 3" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Ordinario" />
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Cal. Final" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:menu="@menu/menu"
+        app:itemIconTint="@color/nav_item_color_state"
+        app:itemTextColor="@color/nav_item_color_state"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:strokeColor="@color/black"
-        app:strokeWidth="1dp" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="125dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="#FFFFFF"
-        android:drawableTint="#00050505"
-        android:fontFamily="sans-serif"
-        android:gravity="bottom|center_horizontal"
-        android:text="@string/btnCali"
-        android:textColor="#000000"
-        android:textSize="10sp"
-        app:cornerRadius="5dp"
-        app:icon="@android:drawable/ic_menu_view"
-        app:iconGravity="textTop"
-        app:iconSize="30sp"
-        app:iconTint="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toEndOf="@+id/btnNoti"
-        app:strokeColor="@color/black"
-        app:strokeWidth="1dp" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="125dp"
-        android:layout_height="68dp"
-        android:layout_marginEnd="5dp"
-        android:backgroundTint="#FFFFFF"
-        android:drawableTint="#00050505"
-        android:fontFamily="sans-serif"
-        android:gravity="bottom|center_horizontal"
-        android:text="@string/btnPerfil"
-        android:textColor="#000000"
-        android:textSize="10sp"
-        app:cornerRadius="5dp"
-        app:icon="@android:drawable/ic_menu_myplaces"
-        app:iconGravity="textTop"
-        app:iconSize="30sp"
-        app:iconTint="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:strokeColor="@color/black"
-        app:strokeWidth="1dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vistaCalificaciones"
-        android:layout_width="405dp"
-        android:layout_height="605dp"
-        app:layout_constraintBottom_toTopOf="@+id/menuNav"
+        android:layout_width="415dp"
+        android:layout_height="542dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvInfo"
+        app:layout_constraintVertical_bias="1.0">
+
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="4dp"
+
+                android:background="@drawable/bg_calificacion_simple">
+
+                <!-- Título de la materia -->
+                <TextView
+                    android:id="@+id/tvTitulo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="Desarrollo mobile"
+                    android:textColor="#212121"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/tvCalificacion"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Calificación numérica -->
+
+                <!-- Texto “calificación no disponible” (invisible por defecto) -->
+
+
+                <TextView
+                    android:id="@+id/tvCalificacion"
+                    android:layout_width="65dp"
+                    android:layout_height="57dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:text="5.4"
+                    android:textColor="#212121"
+                    android:textDirection="anyRtl"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Fecha de aplicación -->
+                <TextView
+                    android:id="@+id/tvNoDisponible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:text="calificación no disponible"
+                    android:textColor="#757575"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tvCalificacion"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvFecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="aplicado: 29/03/25"
+                    android:textColor="#424242"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvTitulo"
+                    app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+                    app:layout_constraintVertical_bias="0.68" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
 
     </androidx.recyclerview.widget.RecyclerView>
 
