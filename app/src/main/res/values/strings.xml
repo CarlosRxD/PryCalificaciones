@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PryCalificaciones</string>
+    <string name="logo_desc">Imagen de la UNPA</string>
+
 </resources>
