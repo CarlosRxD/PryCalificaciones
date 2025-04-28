@@ -1,17 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_gravity="center_horizontal"
-    >
-
+    android:layout_gravity="center_horizontal">
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/contentLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_marginVertical="4dp"
+        android:background="@drawable/bg_calificacion_simple"
+        app:layout_constraintWidth_percent="0.9"
 
-        android:background="@drawable/bg_calificacion_simple">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Título de la materia -->
         <TextView
@@ -29,10 +33,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Calificación numérica -->
-
-        <!-- Texto “calificación no disponible” (invisible por defecto) -->
-
-
         <TextView
             android:id="@+id/tvCalificacion"
             android:layout_width="65dp"
@@ -48,7 +48,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Fecha de aplicación -->
+        <!-- Texto “calificación no disponible” -->
         <TextView
             android:id="@+id/tvNoDisponible"
             android:layout_width="wrap_content"
@@ -61,6 +61,7 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/tvCalificacion"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Fecha de aplicación -->
         <TextView
             android:id="@+id/tvFecha"
             android:layout_width="wrap_content"
@@ -75,4 +76,5 @@
             app:layout_constraintVertical_bias="0.68" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
