@@ -8,88 +8,76 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/TitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iniciar Sesión"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
     <!-- Logo centralizado -->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        app:srcCompat="@drawable/LogoUNPA"
+        app:srcCompat="@drawable/logo_unpa"
         android:contentDescription="@string/logo_desc"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"
-        tools:ignore="ContentDescription" />
+        android:layout_marginTop="32dp" />
 
-    <!-- EditText para username -->
+    <!-- Matrícula -->
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/etMatricula"
+        style="@style/LoginEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:inputType="textEmailAddress"
-        android:padding="12dp"
+        android:hint="Matrícula"
+        android:inputType="text"
         app:layout_constraintTop_toBottomOf="@id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="32dp" />
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
-    <!-- EditText para password -->
+    <!-- Contraseña -->
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/etPassword"
+        style="@style/LoginEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="Contraseña"
         android:inputType="textPassword"
-        android:padding="12dp"
-        app:layout_constraintTop_toBottomOf="@id/editTextText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintTop_toBottomOf="@id/etMatricula"
+        app:layout_constraintStart_toStartOf="@id/etMatricula"
+        app:layout_constraintEnd_toEndOf="@id/etMatricula" />
 
-    <!-- Botón de Login -->
-    <Button
-        android:id="@+id/buttonLogin"
+    <!-- Botón Ingresar estilizado -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogin"
+        style="@style/LoginButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Login"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/buttonRegister"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp" />
+        android:text="Ingresar"
+        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        app:layout_constraintStart_toStartOf="@id/etPassword"
+        app:layout_constraintEnd_toEndOf="@id/etPassword" />
 
-    <!-- Botón de Registrar -->
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Registrar"
-        app:layout_constraintTop_toBottomOf="@id/editTextTextPassword"
-        app:layout_constraintStart_toEndOf="@id/buttonLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp" />
-
-    <!-- Botón de "¿Olvidaste tu contraseña?" -->
-    <Button
+    <!-- Olvidaste contraseña -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonForgotPassword"
+        style="@style/ForgotPasswordButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¿Olvidaste tu contraseña?"
-        android:textAllCaps="false"
-        android:textSize="12sp"
-        android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@id/buttonLogin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        app:layout_constraintStart_toStartOf="@id/btnLogin"
+        app:layout_constraintEnd_toEndOf="@id/btnLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
