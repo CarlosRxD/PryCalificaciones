@@ -2,7 +2,7 @@ package com.unpa.calificaciones.modelos
 
 import Notas
 
-data class Calificacion(
+data class Materia(
     val activo: Boolean = false,
     val calificacion: Notas,
     val id: String = "",
