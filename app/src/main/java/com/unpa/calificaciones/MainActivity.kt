@@ -10,8 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
-    val db = FirebaseFirestore.getInstance();
-    val contenedorCalificaciones: contenedorCalificaciones=contenedorCalificaciones();
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,17 +20,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val intent= Intent(this,contenedorCalificaciones::class.java);
+        val intent= Intent(this,ContenedorCalificaciones::class.java);
         startActivity(intent);
     }
 
-    fun main(){
-        contenedorCalificaciones.obtenerPeriodoActual();
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val intento = Intent(this, ContenedorCalificaciones::class.java)
-        startActivity(intento);
-    }
 }
