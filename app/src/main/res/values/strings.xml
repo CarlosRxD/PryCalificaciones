@@ -3,7 +3,7 @@
     <string name="btnNoti">Notificaciones</string>
     <string name="btnPerfil">Perfil</string>
     <string name="btnCali">Calificaciones</string>
-    <string name="lblCali">Calificaciones</string>
+    <string name="lblCali">Promedio</string>
     <string name="lblPerfil">Perfil</string>
     <string name="lblNoti">Notificaciones</string>
     <string name="kkdvk">kkdvk</string>
@@ -18,4 +18,28 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
+    <string name="sem1">Primer Semestre</string>
+    <string name="sem2">Segundo Semestre</string>
+    <string name="sem3">Tercer Semestre</string>
+    <string name="sem4">Cuarto Semestre</string>
+    <string name="sem5">Quinto Semestre</string>
+    <string name="sem6">Sexto Semestre</string>
+    <string name="sem7">Séptimo Semestre</string>
+    <string name="sem8">Octavo Semestre</string>
+    <string name="sem9">Noveno Semestre</string>
+    <string name="sem10">Décimo Semestre</string>
+    <string name="btnSelector">Semestre actual</string>
+
+    <string-array name="semestres_array">
+        <item>Primero</item>
+        <item>Segundo</item>
+        <item>Tercero</item>
+        <item>Cuarto</item>
+        <item>Quinto</item>
+        <item>Sexto</item>
+        <item>Séptimo</item>
+        <item>Octavo</item>
+        <item>Noveno</item>
+        <item>Décimo</item>
+    </string-array>
 </resources>

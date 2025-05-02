@@ -25,5 +25,6 @@ dependencyResolutionManagement {
     }
 }
 
+
 rootProject.name = "PryCalificaciones"
 include(":app")
