@@ -107,4 +107,29 @@ class ContenedorCalificaciones : AppCompatActivity() {
         // Apply the adapter to the spinner.
         spinner.adapter = adapter
     }*/
+
+    val db = FirebaseFirestore.getInstance()
+
+db.collection("ciclosEscolares")
+    .whereEqualTo("actual", true)
+    .get()
+    .addOnSuccessListener { documents ->
+        if (!documents.isEmpty) {
+            val ciclo = documents.documents[0]
+            val nombre = ciclo.getString("nombre")
+            val fechaInicio = ciclo.getTimestamp("fechaInicio")
+            val fechaFin = ciclo.getTimestamp("fechaFin")
+
+            Log.d("CicloEscolar", "Ciclo actual: $nombre")
+            Log.d("CicloEscolar", "Inicia: $fechaInicio, Termina: $fechaFin")
+            
+            // Aquí puedes guardar esta información o usarla como necesites
+        } else {
+            Log.d("CicloEscolar", "No se encontró ningún ciclo activo.")
+        }
+    }
+    .addOnFailureListener { e ->
+        Log.e("CicloEscolar", "Error al obtener el ciclo activo", e)
+    }
+
 }
