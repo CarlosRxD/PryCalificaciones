@@ -13,5 +13,8 @@ class AuthProvider {
     fun login(email: String, pass: String): Task<AuthResult> {
         return auth.signInWithEmailAndPassword(email, pass)
     }
+    fun getId(): String? {
+        return auth.currentUser?.uid
+    }
 
 }

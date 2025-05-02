@@ -6,11 +6,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.unpa.calificaciones.modelos.Alumno
 import com.unpa.calificaciones.providers.AuthProvider
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var authProvider: AuthProvider
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val intento = Intent(this, ContenedorCalificaciones::class.java)
+        val intento = Intent(this, LoginActivity::class.java)
         startActivity(intento);
     }
 

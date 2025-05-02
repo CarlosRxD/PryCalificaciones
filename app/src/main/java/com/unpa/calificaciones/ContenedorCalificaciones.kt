@@ -1,6 +1,5 @@
 package com.unpa.calificaciones
 
-import Notas
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.unpa.calificaciones.adapters.CalificacionAdapter
 import com.unpa.calificaciones.modelos.Materia
+import com.unpa.calificaciones.modelos.Notas
+import com.unpa.calificaciones.services.UsuarioService
 
 class ContenedorCalificaciones : AppCompatActivity() {
     private lateinit var adapter: CalificacionAdapter
@@ -25,21 +28,15 @@ class ContenedorCalificaciones : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        // Aquí van tus datos de ejemplo o reales
-        val ejemploNotas = Notas(
-            primerParcial = "8",
-            segundoParcial = "9",
-            tercerParcial = null,
-            ordinario = null,
-            final = "9.5",
-            ex1 = null,
-            ex2 = null
-        )
+        var ejemploLista: List<Materia> = listOf<Materia>()
+        // Toma la lista de Notas directamente de cada Materia
+        val alumno      = UsuarioService.alumnoActual
 
-        val ejemploLista = listOf(
-            Materia(true, ejemploNotas, "M1", "Programación Estructurada", "1er Semestre"),
-            Materia(true, ejemploNotas, "M2", "Matemáticas Discretas", "1er Semestre")
-        )
+        if (alumno?.materias !=null){
+            ejemploLista = alumno.materias!!
+        }
+
+
         val recyclerView = findViewById<RecyclerView>(R.id.vistaCalificaciones)
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = CalificacionAdapter(ejemploLista, 0)
