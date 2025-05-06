@@ -1,5 +1,6 @@
 package com.unpa.calificaciones.modelos
 
+import Notas
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.IgnoreExtraProperties
 

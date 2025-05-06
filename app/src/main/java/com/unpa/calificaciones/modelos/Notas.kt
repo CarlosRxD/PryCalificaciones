@@ -1,58 +1,48 @@
-package com.unpa.calificaciones.modelos
+class Notas() {
+    var parcial1: Double? = null
+    var parcial2: Double? = null
+    var parcial3: Double? = null
+    var ordinario: Double? = null
+    var extraOrdinario1: Double? = null
+    //Lo mantuvimos así pq funcionaba, gracias. -Carlos R. Cardoza
+    var extraOrdinatorio2: Double? = null  // <-- coincide con Firestore
 
-import com.google.firebase.firestore.IgnoreExtraProperties
-
-/**
- * Representa las notas de una materia según el esquema en Firestore:
- * - parcial1, parcial2, parcial3
- * - ordinario
- * - extraOrdinario1, extraOrdinario2
- */
-@IgnoreExtraProperties
-data class Notas(
-    val parcial1: String? = null,
-    val parcial2: String? = null,
-    val parcial3: String? = null,
-    val ordinario: String? = null,
-    val extraOrdinario1: String? = null,
-    val extraOrdinario2: String? = null
-) {
-    private val listaNotas = listOf(
-        parcial1,
-        parcial2,
-        parcial3,
-        ordinario,
-        extraOrdinario1,
-        extraOrdinario2
-    )
-
-    /**
-     * Devuelve la nota correspondiente al índice (0..5):
-     * 0 = parcial1, 1 = parcial2, 2 = parcial3,
-     * 3 = ordinario, 4 = extraOrdinario1, 5 = extraOrdinario2
-     */
+    // Lista de notas en orden para facilitar iteraciones
+    val listaNotas: List<String?>
+        get() = listOf(
+            parcial1?.toString(),
+            parcial2?.toString(),
+            parcial3?.toString(),
+            ordinario?.toString(),
+            calcularPromedio().toString(),
+            extraOrdinario1?.toString(),
+            extraOrdinatorio2?.toString()
+        )
     fun getNotaPorIndice(indice: Int): String? {
         return listaNotas.getOrNull(indice)
     }
 
-    /**
-     * Indica si en el índice dado hay un valor no nulo y no en blanco.
-     */
     fun tieneValor(indice: Int): Boolean {
         return getNotaPorIndice(indice)?.isNotBlank() == true
     }
 
-    /**
-     * Devuelve el índice (0..5) de la última nota no nula y no en blanco.
-     * Si no hay ninguna nota, retorna -1.
-     */
     fun getUltimaNotaDisponible(): Int {
         for (i in listaNotas.indices.reversed()) {
-            val nota = listaNotas[i]
-            if (!nota.isNullOrBlank()) {
+            if (!listaNotas[i].isNullOrBlank()) {
                 return i
             }
         }
         return -1
     }
+    fun calcularPromedio(): Double? {
+        return if (parcial1 != null && parcial2 != null && parcial3 != null && ordinario != null) {
+            val promedioParcial = (parcial1!! + parcial2!! + parcial3!!) / 3
+            val promedio = (promedioParcial + ordinario!!) / 2
+            "%.2f".format(promedio).toDouble()
+        } else {
+            null
+        }
+    }
+
+
 }
