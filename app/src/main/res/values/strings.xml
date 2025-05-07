@@ -28,7 +28,7 @@
     <string name="sem8">Octavo Semestre</string>
     <string name="sem9">Noveno Semestre</string>
     <string name="sem10">Décimo Semestre</string>
-    <string name="btnSelector">Semestre actual</string>
+    <string name="txtSemestreSeleccionado">Semestre</string>
 
     <string-array name="semestres_array">
         <item>Primero</item>

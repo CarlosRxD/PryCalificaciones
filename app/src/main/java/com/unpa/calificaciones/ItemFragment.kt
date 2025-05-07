@@ -63,4 +63,8 @@ class ItemFragment : Fragment() {
                 }
             }
     }
+
+    fun geSemestreSeleccioando(){
+
+    }
 }

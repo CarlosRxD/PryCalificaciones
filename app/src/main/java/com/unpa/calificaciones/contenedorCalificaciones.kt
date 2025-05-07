@@ -17,6 +17,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.firebase.firestore.FirebaseFirestore
 import com.unpa.calificaciones.adapters.CalificacionAdapter
+import com.unpa.calificaciones.adapters.SemestreAdapter
 import com.unpa.calificaciones.modelos.Materia
 import com.unpa.calificaciones.services.UsuarioService
 
@@ -24,6 +25,8 @@ class ContenedorCalificaciones : AppCompatActivity() {
 
     private lateinit var simpleListView: Spinner
     private lateinit var adapter: CalificacionAdapter
+    private lateinit var semestreAdapter: SemestreAdapter
+
 
     var semestre: Array<String> = arrayOf(
         "Primero", "Segundo", "Tercero", "Cuarto",
@@ -70,20 +73,34 @@ class ContenedorCalificaciones : AppCompatActivity() {
             }
         }
     }
-    fun llamarFragmento(view:View){
-        val fm: FragmentManager= getSupportFragmentManager();
-        val fragmento: ItemFragment= ItemFragment();
+
+    fun llamarFragmento(view: View) {
+        val fm = supportFragmentManager
+        val fragmentTag = "ItemFragmentTag"
+        val existingFragment = fm.findFragmentByTag(fragmentTag)
+
         val transaction = fm.beginTransaction()
-        fm.findFragmentById(R.id.contenedorSpinner);
 
-        transaction.replace(R.id.contenedorSpinner, fragmento) // Asegúrate de que R.id.list sea un FrameLayout o contenedor válido
-        transaction.addToBackStack(null) // Opcional, para permitir volver con el botón "Atrás"
-        transaction.commit()
+        if (existingFragment != null && existingFragment.isVisible) {
+            // El fragmento ya está visible: lo eliminamos
+            transaction.remove(existingFragment)
+            fm.popBackStack() // Opcional, si se usó addToBackStack
+            transaction.commit()
 
-        findViewById<FrameLayout>(R.id.contenedorSpinner).visibility = View.VISIBLE
+            findViewById<FrameLayout>(R.id.contenedorSpinner).visibility = View.INVISIBLE
+        } else {
+            // El fragmento no está o no está visible: lo mostramos
+            val fragmento = ItemFragment()
+            transaction.replace(R.id.contenedorSpinner, fragmento, fragmentTag)
+            transaction.addToBackStack(null) // Opcional, si quieres volver con "atrás"
+            transaction.commit()
 
+            findViewById<FrameLayout>(R.id.contenedorSpinner).visibility = View.VISIBLE
+        }
     }
-    fun getSemestreActual(){
+
+
+    fun getPeriodoActual(){
         val db = FirebaseFirestore.getInstance()
 
         db.collection("ciclosEscolares")
