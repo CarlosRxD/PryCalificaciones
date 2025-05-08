@@ -27,43 +27,44 @@
             android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.045"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/lblGeneral4"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="41dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginStart="4dp"
+            android:background="@color/white"
             android:gravity="center_vertical"
             android:onClick="llamarFragmento"
-            android:text="@string/lblCali"
             android:textColor="#000000"
             android:textSize="20sp"
+            app:backgroundTint="@color/white"
+            app:icon="@drawable/arrow"
+            app:iconGravity="end"
+            app:iconPadding="8dp"
+            app:iconSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-        <Button
-            android:id="@+id/btnSelector"
-            android:layout_width="153dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="128dp"
-            android:background="#FCFFFFFF"
-            android:gravity="center"
-            android:text="@string/btnSelector"
-            android:textColor="#161616"
-            android:textSize="20sp"
-            app:icon="@drawable/notification"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtSemestreSeleccionado"
+            android:layout_width="64dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="157dp"
+            android:gravity="right|center"
+            android:text="@string/txtSemestreSeleccionado"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/lblGeneral4"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintEnd_toStartOf="@+id/lblGeneral4"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/lblGeneral"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -82,11 +83,12 @@
             android:id="@+id/chipGroupFilters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             app:chipSpacingHorizontal="8dp"
-            android:paddingHorizontal="10dp"
             app:selectionRequired="true"
             app:singleLine="true"
             app:singleSelection="true">
+
 
             <com.google.android.material.chip.Chip
                 style="@style/Widget.MaterialComponents.Chip.Choice"
@@ -146,4 +148,21 @@ app:itemIconTint="@color/nav_item_color_state"
 app:itemTextColor="@color/nav_item_color_state"
 app:menu="@menu/menu" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <FrameLayout
+        android:id="@+id/contenedorSpinner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#CCFFFFFF"
+    android:visibility="gone"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintVertical_bias="1.0"
+    app:layout_constraintHeight_percent="0.5" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,6 +1,6 @@
 package com.unpa.calificaciones.providers
 
-import android.widget.Toast
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.unpa.calificaciones.modelos.Alumno
 import com.unpa.calificaciones.modelos.Materia
@@ -15,10 +15,9 @@ class AlumnoProvider {
         usuarioId: String,
         callback: (Alumno?) -> Unit
     ) {
-        val usuarioRef = db.collection("usuarios").document(usuarioId)
+        val usuarioRef = alumnosCollection.document(usuarioId)
 
         usuarioRef.get().addOnSuccessListener { userDoc ->
-            // 1) Convertir a Usuario y extraer el DocumentReference
             val usuario = userDoc.toObject(Usuario::class.java)
             val alumnoRef = usuario?.alumnoRef
 
@@ -27,7 +26,6 @@ class AlumnoProvider {
                 return@addOnSuccessListener
             }
 
-            // 2) Traer el documento de Alumno
             alumnoRef.get().addOnSuccessListener { alumnoDoc ->
                 val alumno = alumnoDoc.toObject(Alumno::class.java)
                 if (alumno == null) {
@@ -35,24 +33,38 @@ class AlumnoProvider {
                     return@addOnSuccessListener
                 }
 
-                // 3) Traer la subcolección “materias”
                 alumnoRef.collection("materias")
                     .get()
                     .addOnSuccessListener { snap ->
+                        // Log 1: datos crudos desde Firestore
+                        for (doc in snap.documents) {
+                            Log.d("FirebaseMateriaRaw", "Raw data: ${doc.data}")
+                        }
+
+                        // Mapear a objetos Materia
                         alumno.materias = snap.mapNotNull { it.toObject(Materia::class.java) }
+
+                        // Log 2: mostrar solo notas
+                        for ((index, materia) in alumno.materias?.withIndex()!!) {
+                            Log.d(
+                                "NotasDeserializadas",
+                                "Materia $index: ${materia.materia}, Notas: ${materia.calificacion.listaNotas}"
+                            )
+                        }
+
                         callback(alumno)
                     }
                     .addOnFailureListener {
+                        Log.e("AlumnoProvider", "Error al obtener materias", it)
                         callback(null)
                     }
-            }
-                .addOnFailureListener {
-                    callback(null)
-                }
-        }
-            .addOnFailureListener {
+            }.addOnFailureListener {
+                Log.e("AlumnoProvider", "Error al obtener documento de alumno", it)
                 callback(null)
             }
+        }.addOnFailureListener {
+            Log.e("AlumnoProvider", "Error al obtener usuario", it)
+            callback(null)
+        }
     }
-
 }

@@ -5,8 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.unpa.calificaciones.R
-import com.unpa.calificaciones.modelos.Calificacion
-import com.unpa.calificaciones.view_holders.CalificacionViewHolder
 import com.unpa.calificaciones.view_holders.SemestreViewHolder
 
 class SemestreAdapter (private val semestre:List<String> ) :RecyclerView.Adapter<SemestreViewHolder>(){

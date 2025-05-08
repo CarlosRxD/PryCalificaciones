@@ -75,8 +75,7 @@ class LoginActivity : AppCompatActivity() {
         etPass.isEnabled    = !show
     }
     private fun fetchAlumno(matricula: String) {
-        // En tu colección "usuarios" usas como ID la matrícula…
-        AlumnoProvider().obtenerAlumnoConMateriasDeUsuario("20010143") { alumno ->
+        AlumnoProvider().obtenerAlumnoConMateriasDeUsuario(matricula) { alumno ->
             showLoading(false)
             if (alumno != null) {
                 UsuarioService.alumnoActual = alumno
