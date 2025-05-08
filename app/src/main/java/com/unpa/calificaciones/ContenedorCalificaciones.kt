@@ -1,23 +1,36 @@
 package com.unpa.calificaciones
 
+import Notas
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.FrameLayout
+import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.unpa.calificaciones.adapters.CalificacionAdapter
+import com.unpa.calificaciones.modelos.Calificacion
 import com.unpa.calificaciones.modelos.Materia
 import com.unpa.calificaciones.modelos.Notas
-import com.unpa.calificaciones.services.UsuarioService
 
 class ContenedorCalificaciones : AppCompatActivity() {
-    private lateinit var adapter: CalificacionAdapter
+
+    private lateinit var simpleListView: Spinner
+
+
+    var semestre: Array<String> = arrayOf(
+        "Primero", "Segundo", "Tercero", "Cuarto",
+        "Quinto", "Sexto", "Séptimo", "Octavo",
+        "Noveno", "Décimo"
+    )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,34 +41,102 @@ class ContenedorCalificaciones : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        var ejemploLista: List<Materia> = listOf<Materia>()
-        // Toma la lista de Notas directamente de cada Materia
-        val alumno      = UsuarioService.alumnoActual
 
-        if (alumno?.materias !=null){
-            ejemploLista = alumno.materias!!
-        }
+        // Aquí van tus datos de ejemplo o reales
+        val ejemploNotas = Notas(
+            primerParcial = "8",
+            segundoParcial = "9",
+            tercerParcial = null,
+            ordinario = null,
+            final = "9.5",
+            ex1 = null,
+            ex2 = null
+        )
 
+        val ejemploLista = listOf(
+            Materia(true, ejemploNotas, "Programación Estructurada", "1er Semestre"),
+            Materia(true, ejemploNotas, "Matemáticas Discretas", "1er Semestre")
+        )
 
         val recyclerView = findViewById<RecyclerView>(R.id.vistaCalificaciones)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = CalificacionAdapter(ejemploLista, 0)
-        recyclerView.adapter = adapter
-        configurarChips()
+        recyclerView.adapter = CalificacionAdapter(ejemploLista, 0) // ← Aquí puedes cambiar el índice de la nota
+        //llenarChips()
     }
-    fun configurarChips() {
+    /*fun llenarChips(){
         val chipGroup = findViewById<ChipGroup>(R.id.chipGroupFilters)
-
-        // Asumimos que el orden en el ChipGroup corresponde al índice esperado (0=Parcial1, 1=Parcial2, etc.)
-        for (i in 0 until chipGroup.childCount) {
-            val chip = chipGroup.getChildAt(i) as? Chip ?: continue
-
-            chip.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    adapter.setPos(i)
+        val labels = listOf("")
+        labels.forEachIndexed { index, text ->
+            val chip = Chip(this).apply {
+                id = View.generateViewId()
+                layoutParams = ViewGroup.MarginLayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).also {
+                    it.setMargins(0, 0, 16, 0)
+                }
+                this.text = text
+                isCheckable = true
+                isChecked = (index == 0)
+                setOnCheckedChangeListener { _, isChecked ->
+                    // filtra tu RecyclerView aquí
                 }
             }
+            chipGroup.addView(chip)
         }
+
+    }*/
+
+    fun llamarFragmento(view:View){
+        val fm: FragmentManager= getSupportFragmentManager();
+        val fragmento: ItemFragment= ItemFragment();
+        val transaction = fm.beginTransaction()
+        fm.findFragmentById(R.id.contenedorSpinner);
+
+        transaction.replace(R.id.contenedorSpinner, fragmento) // Asegúrate de que R.id.list sea un FrameLayout o contenedor válido
+        transaction.addToBackStack(null) // Opcional, para permitir volver con el botón "Atrás"
+        transaction.commit()
+
+        findViewById<FrameLayout>(R.id.contenedorSpinner).visibility = View.VISIBLE
+
     }
+
+    /*val spinner: Spinner = findViewById(R.id.optSemestre)
+    // Create an ArrayAdapter using the string array and a default spinner layout.
+    ArrayAdapter.createFromResource(this,R.array.planets,
+    android.R.layout.simple_spinner_item
+    ).also { adapter ->
+        // Specify the layout to use when the list of choices appears.
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        // Apply the adapter to the spinner.
+        spinner.adapter = adapter
+    }*/
+
+    fun getCicloEscolarActual(){
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("ciclosEscolares")
+            .whereEqualTo("actual", true)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    val ciclo = documents.documents[0]
+                    val nombre = ciclo.getString("nombre")
+                    val fechaInicio = ciclo.getTimestamp("fechaInicio")
+                    val fechaFin = ciclo.getTimestamp("fechaFin")
+
+                    Log.d("CicloEscolar", "Ciclo actual: $nombre")
+                    Log.d("CicloEscolar", "Inicia: $fechaInicio, Termina: $fechaFin")
+
+                    // Aquí puedes guardar esta información o usarla como necesites
+                } else {
+                    Log.d("CicloEscolar", "No se encontró ningún ciclo activo.")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("CicloEscolar", "Error al obtener el ciclo activo", e)
+            }
+    }
+
 
 }
