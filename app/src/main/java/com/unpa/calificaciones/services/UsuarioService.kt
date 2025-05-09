@@ -4,4 +4,5 @@ import com.unpa.calificaciones.modelos.Alumno
 
 object UsuarioService {
     var alumnoActual: Alumno? = null
+    var semestreSeleccionado:String?=null;
 }

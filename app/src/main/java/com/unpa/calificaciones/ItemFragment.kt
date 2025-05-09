@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.unpa.calificaciones.adapters.SemestreAdapter
 import com.unpa.calificaciones.placeholder.PlaceholderContent
+import com.unpa.calificaciones.services.UsuarioService
 
 /**
  * A fragment representing a list of Items.
@@ -43,7 +45,10 @@ class ItemFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = SemestreAdapter(semestres)
+                adapter = SemestreAdapter(semestres){
+                    seleccion->
+                        onSemestreSeleccionado(seleccion);
+                }
             }
         }
         return view
@@ -64,7 +69,9 @@ class ItemFragment : Fragment() {
             }
     }
 
-    fun geSemestreSeleccioando(){
+    fun onSemestreSeleccionado(semestre:String){
+        val semestre = UsuarioService.semestreSeleccionado;
 
+        Toast.makeText(context,"Seleccionado: $semestre",Toast.LENGTH_LONG).show();
     }
 }
