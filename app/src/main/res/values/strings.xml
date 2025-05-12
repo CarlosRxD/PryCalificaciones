@@ -42,4 +42,10 @@
         <item>Noveno</item>
         <item>Décimo</item>
     </string-array>
+
+    <string name="txtTitulo">Mi perfil</string>
+    <string name="txtSubtitulo">Información personal</string>
+    <string name="txtSeguridad">Seguridad</string>
+    <string name="btnCambiarPass">Cambiar contraseña</string>
+    <string name="btnConectarFb">Conectar con Facebook</string>
 </resources>
