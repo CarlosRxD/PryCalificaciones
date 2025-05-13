@@ -1,5 +1,6 @@
 package com.unpa.calificaciones.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,6 @@ class CalificacionAdapter(
     // Enlazar el dato al ViewHolder
     override fun onBindViewHolder(holder: CalificacionViewHolder, position: Int) {
         val calificacion = calificaciones[position]
-
         // Configurar título y fecha
         holder.tvTitulo.text = calificacion.materia
         holder.tvFecha.text = "aplicado: ayer, yo creo" // Esto podrías ajustarlo según tu lógica

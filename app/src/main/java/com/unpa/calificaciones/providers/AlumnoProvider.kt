@@ -48,7 +48,7 @@ class AlumnoProvider {
                         for ((index, materia) in alumno.materias?.withIndex()!!) {
                             Log.d(
                                 "NotasDeserializadas",
-                                "Materia $index: ${materia.materia}, Notas: ${materia.calificacion.listaNotas}"
+                                "Materia $index: ${materia.materia}, Notas: ${materia.calificaciones.listaNotas}"
                             )
                         }
 

@@ -19,8 +19,8 @@
 
         <TextView
             android:id="@+id/lblGeneral"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
             android:layout_marginStart="4dp"
             android:gravity="center_vertical"
             android:text="@string/lblCali"
@@ -35,7 +35,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/lblGeneral4"
-            android:layout_width="41dp"
+            android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginEnd="16dp"
             android:background="@color/white"
@@ -54,7 +54,7 @@
 
         <TextView
             android:id="@+id/txtSemestreSeleccionado"
-            android:layout_width="64dp"
+            android:layout_width="0dp"
             android:layout_height="32dp"
             android:layout_marginStart="157dp"
             android:gravity="right|center"
