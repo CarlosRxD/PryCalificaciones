@@ -30,8 +30,8 @@ class ContenedorCalificaciones : AppCompatActivity() {
 
     var semestre: Array<String> = arrayOf(
         "Primero", "Segundo", "Tercero", "Cuarto",
-        "Quinto", "Sexto", "S├®ptimo", "Octavo",
-        "Noveno", "D├®cimo"
+        "Quinto", "Sexto", "Séptimo", "Octavo",
+        "Noveno", "Décimo"
     )
 
 
@@ -126,5 +126,4 @@ class ContenedorCalificaciones : AppCompatActivity() {
             }
 
     }
-
 }

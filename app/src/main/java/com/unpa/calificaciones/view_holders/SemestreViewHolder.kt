@@ -5,7 +5,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.unpa.calificaciones.R
 
-class SemestreViewHolder( vista : View):ViewHolder(vista) {
+class SemestreViewHolder( private val vista : View):ViewHolder(vista) {
     val txtSemestre: TextView = vista.findViewById(R.id.textView);
 
+    fun bind(semestre:String,onItemClick:(String)-> Unit){
+        txtSemestre.text=semestre;
+        vista.setOnClickListener{
+            onItemClick(semestre);
+        }
+
+    }
 }
+
