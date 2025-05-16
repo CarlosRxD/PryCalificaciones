@@ -1,7 +1,9 @@
 package com.unpa.calificaciones
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.FrameLayout
@@ -13,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.firebase.firestore.FirebaseFirestore
@@ -45,6 +48,7 @@ class ContenedorCalificaciones : AppCompatActivity() {
             insets
         }
 
+        configurarRutas();221
         var ejemploLista: List<Materia> = listOf<Materia>()
         // Toma la lista de Notas directamente de cada Materia
         val alumno      = UsuarioService.alumnoActual
@@ -124,6 +128,25 @@ class ContenedorCalificaciones : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Log.e("CicloEscolar", "Error al obtener el ciclo activo", e)
             }
-
     }
+
+    fun configurarRutas(){
+        val bottomNavView: BottomNavigationView = findViewById(R.id.bottom_nav)
+        bottomNavView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_calificaciones -> {
+                    val intent = Intent(this, this::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.nav_perfil -> {
+                    val intent = Intent(this, Perfil::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false // Si no es ninguno de los ítems definidos
+            }
+        }
+    }
+
 }
