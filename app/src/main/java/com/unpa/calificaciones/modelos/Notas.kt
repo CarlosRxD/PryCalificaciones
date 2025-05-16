@@ -3,9 +3,10 @@ class Notas() {
     var parcial2: Double? = null
     var parcial3: Double? = null
     var ordinario: Double? = null
+    var pFinal: Double? = null
     var extraOrdinario1: Double? = null
     //Lo mantuvimos así pq funcionaba, gracias. -Carlos R. Cardoza
-    var extraOrdinatorio2: Double? = null  // <-- coincide con Firestore
+    var extraOrdinario2: Double? = null  // <-- coincide con Firestore
 
     // Lista de notas en orden para facilitar iteraciones
     val listaNotas: List<String?>
@@ -14,9 +15,9 @@ class Notas() {
             parcial2?.toString(),
             parcial3?.toString(),
             ordinario?.toString(),
-            calcularPromedio().toString(),
+            pFinal?.toString(),
             extraOrdinario1?.toString(),
-            extraOrdinatorio2?.toString()
+            extraOrdinario2?.toString()
         )
     fun getNotaPorIndice(indice: Int): String? {
         return listaNotas.getOrNull(indice)

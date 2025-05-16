@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -51,12 +53,23 @@ class ContenedorCalificaciones : AppCompatActivity() {
         if (alumno?.materias !=null){
             ejemploLista = alumno.materias!!
         }
-
-
         val recyclerView = findViewById<RecyclerView>(R.id.vistaCalificaciones)
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = CalificacionAdapter(ejemploLista, 0)
         recyclerView.adapter = adapter
+
+        val promedioGeneral = calcularPromedioGeneral(ejemploLista)
+
+        val lblGeneral = findViewById<TextView>(R.id.lblGeneral)
+
+        if (promedioGeneral != null) {
+            lblGeneral.text = String.format("PromG: %.2f", promedioGeneral)
+        } else {
+            lblGeneral.text = "PromG: N/A"
+        }
+
+
+
         configurarChips()
     }
     fun configurarChips() {
@@ -69,6 +82,7 @@ class ContenedorCalificaciones : AppCompatActivity() {
             chip.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     adapter.setPos(i)
+                    Toast.makeText(this, "Filtro ${i + 1} activado", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -126,4 +140,19 @@ class ContenedorCalificaciones : AppCompatActivity() {
             }
 
     }
+    private fun calcularPromedioGeneral(materias: List<Materia>): Double {
+        var suma = 0.0
+        var contador = 0
+
+        for (materia in materias) {
+            val promedioMateria = materia.calificaciones.calcularPromedio()
+            if (promedioMateria != null) {
+                suma += promedioMateria
+                contador++
+            }
+        }
+
+        return if (contador > 0) suma / contador else 0.0
+    }
+
 }
