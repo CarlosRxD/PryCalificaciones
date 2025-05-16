@@ -15,6 +15,9 @@
         android:theme="@style/Theme.PryCalificaciones"
         tools:targetApi="31">
         <activity
+            android:name=".Notificaciones"
+            android:exported="false" />
+        <activity
             android:name=".Perfil"
             android:exported="false" />
         <activity
