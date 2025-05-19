@@ -8,8 +8,7 @@ data class Alumno(
     val apPaterno: String = "",
     val matricula: String = "",
     val nombre: String = "",
-    @Transient
-    val isRegular: Boolean=true,
+    val esRegular: Boolean=true,
     @Transient
     var materias: List<Materia>? = null // Se ignora al guardar en Firestore
 )

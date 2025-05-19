@@ -9,29 +9,16 @@
     tools:context=".ContenedorCalificaciones">
 
     <!-- Encabezado con promedio -->
+
+    <!-- Filtros deslizables -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/tvPerfil"
         android:layout_width="0dp"
         android:layout_height="58dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/lblGeneral"
-            android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="4dp"
-            android:gravity="center_vertical"
-            android:text="@string/lblCali"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.045"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/lblGeneral4"
@@ -56,19 +43,24 @@
             android:id="@+id/txtSemestreSeleccionado"
             android:layout_width="0dp"
             android:layout_height="32dp"
-            android:layout_marginStart="157dp"
             android:gravity="right|center"
             android:text="@string/txtSemestreSeleccionado"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/lblGeneral4"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/lblGeneral"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lblGeneral"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:gravity="center_vertical"
+            android:text="@string/lblCali"
+            android:textColor="#000000"
+            android:textSize="20sp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Filtros deslizables -->
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="0dp"
@@ -135,7 +127,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
@@ -162,8 +154,6 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintVertical_bias="1.0"
     app:layout_constraintHeight_percent="0.5" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
