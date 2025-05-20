@@ -40,9 +40,16 @@ class ContenedorCalificaciones : AppCompatActivity() {
         "Quinto", "Sexto", "Séptimo", "Octavo",
         "Noveno", "Décimo"
     )
-    private lateinit var ejemploLista : Map<Int, List<Materia>>;
-
+    private lateinit var ejemploLista : Map<String, List<Materia>>;
+    private lateinit var overlay : View ;
     override fun onCreate(savedInstanceState: Bundle?) {
+        UsuarioService.semestreSeleccionado.observe(this) { semestre ->
+            if (semestre != null) {
+                actualizarVistaConSemestre(semestre)
+                ocultarFragmentoSiVisible()
+            }
+        }
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_contenedor_calificaciones)
@@ -62,7 +69,10 @@ class ContenedorCalificaciones : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.vistaCalificaciones)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val semestreSeleccionado = ejemploLista.keys.max();
+        val ordenSemestres = listOf("Primer Semestre", "Segundo Semestre", "Tercer Semestre", "Cuarto Semestre", "Quinto Semestre", "Sexto Semestre", "Séptimo Semestre", "Octavo Semestre", "Noveno Semestre", "Décimo Semestre")
+
+        val semestreSeleccionado = ejemploLista.keys.maxByOrNull { ordenSemestres.indexOf(it) }
+
         adapter = CalificacionAdapter(ejemploLista[semestreSeleccionado]!!, 0)
         recyclerView.adapter = adapter
 
@@ -76,7 +86,7 @@ class ContenedorCalificaciones : AppCompatActivity() {
         }
 
 
-
+        overlay = findViewById<View>(R.id.blurOverlaySpinner);
         configurarChips()
     }
 
@@ -97,6 +107,7 @@ class ContenedorCalificaciones : AppCompatActivity() {
     }
 
     fun llamarFragmento(view: View) {
+        overlay.visibility = View.VISIBLE
         val fm = supportFragmentManager
         val fragmentTag = "ItemFragmentTag"
         val existingFragment = fm.findFragmentByTag(fragmentTag)
@@ -105,13 +116,14 @@ class ContenedorCalificaciones : AppCompatActivity() {
 
         if (existingFragment != null && existingFragment.isVisible) {
             // El fragmento ya est├í visible: lo eliminamos
+            overlay.visibility = View.GONE
             transaction.remove(existingFragment)
             fm.popBackStack() // Opcional, si se usa addToBackStack
             transaction.commit()
 
             findViewById<FrameLayout>(R.id.contenedorSpinner).visibility = View.INVISIBLE
         } else {
-            val fragmento = ItemFragment.newInstance(1,ejemploLista.keys.toList())
+            val fragmento = ItemFragment.newInstance(1,ejemploLista.keys.toList().reversed())
             transaction.replace(R.id.contenedorSpinner, fragmento, fragmentTag)
             transaction.addToBackStack(null) // Opcional, si quieres volver con "atr├ís"
             transaction.commit()
@@ -120,8 +132,8 @@ class ContenedorCalificaciones : AppCompatActivity() {
         }
     }
 
-    fun getPeriodos(lista: List<Materia>): Map<Int, List<Materia>> {
-        return lista.groupBy { it.semestre.toInt() }
+    fun getPeriodos(lista: List<Materia>): Map<String, List<Materia>> {
+        return lista.groupBy { it.semestre }
     }
 
     private fun calcularPromedioGeneral(materias: List<Materia>): Double {
@@ -155,6 +167,26 @@ class ContenedorCalificaciones : AppCompatActivity() {
                 }
                 else -> false // Si no es ninguno de los ítems definidos
             }
+        }
+    }
+    private fun actualizarVistaConSemestre(semestre: String) {
+        val materias = ejemploLista[semestre] ?: return
+
+        adapter = CalificacionAdapter(materias, 0)
+        findViewById<RecyclerView>(R.id.vistaCalificaciones).adapter = adapter
+    }
+
+    private fun ocultarFragmentoSiVisible() {
+        overlay.visibility = View.GONE
+        val fragmentManager = supportFragmentManager
+        val fragment = fragmentManager.findFragmentByTag("ItemFragmentTag")
+        if (fragment != null && fragment.isVisible) {
+            fragmentManager.beginTransaction()
+                .remove(fragment)
+                .commit()
+
+            // También ocultamos el contenedor visual
+            findViewById<FrameLayout>(R.id.contenedorSpinner).visibility = View.GONE
         }
     }
 

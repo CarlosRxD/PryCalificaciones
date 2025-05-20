@@ -15,14 +15,14 @@ import com.unpa.calificaciones.services.UsuarioService
 class ItemFragment : Fragment() {
 
     private var columnCount = 1
-    private var semestres: List<Int> = emptyList()
+    private var semestres: List<String> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
-            semestres = it.getIntArray(ARG_SEMESTRES)?.toList() ?: emptyList()
+            semestres = it.getStringArray(ARG_SEMESTRES)?.toList() ?: emptyList()
         }
     }
 
@@ -40,7 +40,7 @@ class ItemFragment : Fragment() {
                 } else {
                     GridLayoutManager(context, columnCount)
                 }
-                adapter = SemestreAdapter(getSemestresString(semestres)) { seleccion ->
+                adapter = SemestreAdapter(semestres) { seleccion ->
                     onSemestreSeleccionado(seleccion)
                 }
             }
@@ -48,19 +48,8 @@ class ItemFragment : Fragment() {
         return view
     }
 
-    private fun getSemestresString(semestres: List<Int>): List<String> {
-        val nombres = listOf(
-            "Primero", "Segundo", "Tercero", "Cuarto",
-            "Quinto", "Sexto", "Séptimo", "Octavo",
-            "Noveno", "Décimo"
-        )
-        return semestres.mapNotNull { numero ->
-            if (numero in 1..nombres.size) nombres[numero - 1] else null
-        }
-    }
-
     private fun onSemestreSeleccionado(semestre: String) {
-        UsuarioService.semestreSeleccionado = semestre
+        UsuarioService.seleccionarSemestre(semestre)
         Toast.makeText(context, "Seleccionado: $semestre", Toast.LENGTH_LONG).show()
     }
 
@@ -69,11 +58,11 @@ class ItemFragment : Fragment() {
         private const val ARG_SEMESTRES = "semestres"
 
         @JvmStatic
-        fun newInstance(columnCount: Int, semestres: List<Int>): ItemFragment {
+        fun newInstance(columnCount: Int, semestres: List<String>): ItemFragment {
             val fragment = ItemFragment()
             val args = Bundle().apply {
                 putInt(ARG_COLUMN_COUNT, columnCount)
-                putIntArray(ARG_SEMESTRES, semestres.toIntArray())
+                putStringArray(ARG_SEMESTRES, semestres.toTypedArray())
             }
             fragment.arguments = args
             return fragment
