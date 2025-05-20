@@ -26,7 +26,7 @@
             android:layout_height="32dp"
             android:layout_marginEnd="16dp"
             android:background="@color/white"
-            android:gravity="center_vertical"
+            android:gravity="center|center_vertical"
             android:onClick="llamarFragmento"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -53,10 +53,14 @@
             android:id="@+id/lblGeneral"
             android:layout_width="0dp"
             android:layout_height="32dp"
+            android:layout_marginStart="16dp"
             android:gravity="center_vertical"
             android:text="@string/lblCali"
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

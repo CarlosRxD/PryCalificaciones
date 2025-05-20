@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.parser.IntegerParser
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -27,12 +28,11 @@ import com.unpa.calificaciones.adapters.CalificacionAdapter
 import com.unpa.calificaciones.adapters.SemestreAdapter
 import com.unpa.calificaciones.modelos.Materia
 import com.unpa.calificaciones.services.UsuarioService
+import java.util.LinkedHashMap
 
 class ContenedorCalificaciones : AppCompatActivity() {
 
-    private lateinit var simpleListView: Spinner
     private lateinit var adapter: CalificacionAdapter
-    private lateinit var semestreAdapter: SemestreAdapter
 
 
     var semestre: Array<String> = arrayOf(
@@ -40,7 +40,7 @@ class ContenedorCalificaciones : AppCompatActivity() {
         "Quinto", "Sexto", "Séptimo", "Octavo",
         "Noveno", "Décimo"
     )
-
+    private lateinit var ejemploLista : Map<Int, List<Materia>>;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,23 +53,24 @@ class ContenedorCalificaciones : AppCompatActivity() {
         }
 
         configurarRutas();
-        var ejemploLista: List<Materia> = listOf<Materia>()
-        // Toma la lista de Notas directamente de cada Materia
+        ejemploLista = LinkedHashMap();
+
         val alumno = UsuarioService.alumnoActual
         if (alumno?.materias != null) {
-            ejemploLista = alumno.materias!!
+            ejemploLista = getPeriodos(alumno.materias!!)
         }
+
         val recyclerView = findViewById<RecyclerView>(R.id.vistaCalificaciones)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = CalificacionAdapter(ejemploLista, 0)
+        val semestreSeleccionado = ejemploLista.keys.max();
+        adapter = CalificacionAdapter(ejemploLista[semestreSeleccionado]!!, 0)
         recyclerView.adapter = adapter
 
-        val promedioGeneral = calcularPromedioGeneral(ejemploLista)
-
+        val promedioGeneral = calcularPromedioGeneral(ejemploLista[semestreSeleccionado]!!)
         val lblGeneral = findViewById<TextView>(R.id.lblGeneral)
 
         if (promedioGeneral != null) {
-            lblGeneral.text = String.format("PromG: %.2f", promedioGeneral)
+            lblGeneral.text = String.format("PromG: %.1f", promedioGeneral)
         } else {
             lblGeneral.text = "PromG: N/A"
         }
@@ -110,7 +111,7 @@ class ContenedorCalificaciones : AppCompatActivity() {
 
             findViewById<FrameLayout>(R.id.contenedorSpinner).visibility = View.INVISIBLE
         } else {
-            val fragmento = ItemFragment()
+            val fragmento = ItemFragment.newInstance(1,ejemploLista.keys.toList())
             transaction.replace(R.id.contenedorSpinner, fragmento, fragmentTag)
             transaction.addToBackStack(null) // Opcional, si quieres volver con "atr├ís"
             transaction.commit()
@@ -119,8 +120,8 @@ class ContenedorCalificaciones : AppCompatActivity() {
         }
     }
 
-    fun getPeriodos(lista: List<Materia>): Map<DocumentReference?, List<Materia>> {
-        return lista.groupBy { it.cicloEscolarRef }
+    fun getPeriodos(lista: List<Materia>): Map<Int, List<Materia>> {
+        return lista.groupBy { it.semestre.toInt() }
     }
 
     private fun calcularPromedioGeneral(materias: List<Materia>): Double {

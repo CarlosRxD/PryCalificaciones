@@ -10,25 +10,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.unpa.calificaciones.adapters.SemestreAdapter
-import com.unpa.calificaciones.placeholder.PlaceholderContent
 import com.unpa.calificaciones.services.UsuarioService
 
-/**
- * A fragment representing a list of Items.
- */
 class ItemFragment : Fragment() {
 
-    val semestres = listOf(
-       "Primer Semestre",
-        "Segundo Semestre"
-    )
     private var columnCount = 1
+    private var semestres: List<Int> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
+            semestres = it.getIntArray(ARG_SEMESTRES)?.toList() ?: emptyList()
         }
     }
 
@@ -41,37 +35,48 @@ class ItemFragment : Fragment() {
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
+                layoutManager = if (columnCount <= 1) {
+                    LinearLayoutManager(context)
+                } else {
+                    GridLayoutManager(context, columnCount)
                 }
-                adapter = SemestreAdapter(semestres){
-                    seleccion->
-                        onSemestreSeleccionado(seleccion);
+                adapter = SemestreAdapter(getSemestresString(semestres)) { seleccion ->
+                    onSemestreSeleccionado(seleccion)
                 }
             }
         }
         return view
     }
 
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            ItemFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
+    private fun getSemestresString(semestres: List<Int>): List<String> {
+        val nombres = listOf(
+            "Primero", "Segundo", "Tercero", "Cuarto",
+            "Quinto", "Sexto", "Séptimo", "Octavo",
+            "Noveno", "Décimo"
+        )
+        return semestres.mapNotNull { numero ->
+            if (numero in 1..nombres.size) nombres[numero - 1] else null
+        }
     }
 
-    fun onSemestreSeleccionado(semestre:String){
-        val semestre = UsuarioService.semestreSeleccionado;
+    private fun onSemestreSeleccionado(semestre: String) {
+        UsuarioService.semestreSeleccionado = semestre
+        Toast.makeText(context, "Seleccionado: $semestre", Toast.LENGTH_LONG).show()
+    }
 
-        Toast.makeText(context,"Seleccionado: $semestre",Toast.LENGTH_LONG).show();
+    companion object {
+        private const val ARG_COLUMN_COUNT = "column-count"
+        private const val ARG_SEMESTRES = "semestres"
+
+        @JvmStatic
+        fun newInstance(columnCount: Int, semestres: List<Int>): ItemFragment {
+            val fragment = ItemFragment()
+            val args = Bundle().apply {
+                putInt(ARG_COLUMN_COUNT, columnCount)
+                putIntArray(ARG_SEMESTRES, semestres.toIntArray())
+            }
+            fragment.arguments = args
+            return fragment
+        }
     }
 }
