@@ -30,36 +30,23 @@ import com.unpa.calificaciones.modelos.Materia
 import com.unpa.calificaciones.services.UsuarioService
 import java.util.LinkedHashMap
 
-class ContenedorCalificaciones : AppCompatActivity() {
+class ContenedorCalificaciones : LayoutActivity() {
 
     private lateinit var adapter: CalificacionAdapter
-
-
-    var semestre: Array<String> = arrayOf(
-        "Primero", "Segundo", "Tercero", "Cuarto",
-        "Quinto", "Sexto", "Séptimo", "Octavo",
-        "Noveno", "Décimo"
-    )
     private lateinit var ejemploLista : Map<String, List<Materia>>;
     private lateinit var overlay : View ;
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_contenedor_calificaciones)
+
         UsuarioService.semestreSeleccionado.observe(this) { semestre ->
             if (semestre != null) {
                 actualizarVistaConSemestre(semestre)
                 ocultarFragmentoSiVisible()
             }
         }
-
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_contenedor_calificaciones)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        configurarRutas();
         ejemploLista = LinkedHashMap();
 
         val alumno = UsuarioService.alumnoActual
@@ -151,24 +138,6 @@ class ContenedorCalificaciones : AppCompatActivity() {
         return if (contador > 0) suma / contador else 0.0
     }
 
-    fun configurarRutas(){
-        val bottomNavView: BottomNavigationView = findViewById(R.id.bottom_nav)
-        bottomNavView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_calificaciones -> {
-                    val intent = Intent(this, this::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.nav_perfil -> {
-                    val intent = Intent(this, Perfil::class.java)
-                    startActivity(intent)
-                    true
-                }
-                else -> false // Si no es ninguno de los ítems definidos
-            }
-        }
-    }
     private fun actualizarVistaConSemestre(semestre: String) {
         val materias = ejemploLista[semestre] ?: return
 
@@ -189,5 +158,7 @@ class ContenedorCalificaciones : AppCompatActivity() {
             findViewById<FrameLayout>(R.id.contenedorSpinner).visibility = View.GONE
         }
     }
+
+
 
 }

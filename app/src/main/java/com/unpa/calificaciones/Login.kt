@@ -85,6 +85,7 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
+                Log.i("No se pudo cargar el alumno", authProvider.getId().toString())
                 Toast.makeText(this, "No se pudo cargar el alumno", Toast.LENGTH_SHORT).show()
             }
         }
