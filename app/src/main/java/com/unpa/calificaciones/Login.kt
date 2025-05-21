@@ -80,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
             if (alumno != null) {
                 UsuarioService.alumnoActual = alumno
                 // Alumno encontrado → iniciar la actividad principal
-                val intent = Intent(this, ContenedorCalificaciones::class.java)
+                val intent = Intent(this, LayoutActivity::class.java)
                 //intent.putExtra("alumno", alumno)
                 startActivity(intent)
                 finish()

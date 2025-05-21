@@ -5,62 +5,65 @@ import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.unpa.calificaciones.fragmentViews.CalificacionesFragment
+import com.unpa.calificaciones.fragmentViews.NotificacionFragment
+import com.unpa.calificaciones.fragmentViews.PerfilFragment
 
-open class LayoutActivity : AppCompatActivity() {
 
+class LayoutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
+        setContentView(R.layout.activity_layout)
 
-    override fun setContentView(layoutResID: Int) {
-        val baseLayout = layoutInflater.inflate(R.layout.activity_layout, null)
-        val contentFrame = baseLayout.findViewById<FrameLayout>(R.id.content_frame)
-        layoutInflater.inflate(layoutResID, contentFrame, true)
-        super.setContentView(baseLayout)
-        setupBottomNavigation()
-    }
-
-    private fun setupBottomNavigation() {
+        val viewPager = findViewById<ViewPager2>(R.id.view_pager)
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
 
-        bottomNav.setOnItemSelectedListener { item ->
-            Toast.makeText(this,item.toString(), Toast.LENGTH_LONG).show()
-            when (item.itemId) {
-                R.id.nav_calificaciones -> {
-                    if (this !is ContenedorCalificaciones) {
-                        startActivity(Intent(this, ContenedorCalificaciones::class.java))
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                        finish()
+        val fragments = listOf(
+            NotificacionFragment() ,
+            CalificacionesFragment(),
+            PerfilFragment(),
+        )
+        viewPager.adapter = object : FragmentStateAdapter(this) {
+            override fun getItemCount() = fragments.size
+            override fun createFragment(pos: Int) = fragments[pos]
+        }
+        viewPager.offscreenPageLimit = fragments.size
+        // … después de ajustar offscreenPageLimit
+        viewPager.offscreenPageLimit = fragments.size
+
+        // **Fijar al iniciar que muestre Calificaciones (índice 1)**
+        viewPager.setCurrentItem(1, false)
+        bottomNav.selectedItemId = R.id.nav_calificaciones
+        // Swipe -> menú
+        viewPager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    bottomNav.selectedItemId = when (position) {
+                        0 -> R.id.nav_notificaciones
+                        1 -> R.id.nav_calificaciones
+                        2 -> R.id.nav_perfil
+                        else -> R.id.nav_calificaciones
                     }
-                    true
                 }
-                R.id.nav_perfil -> {
-                    if (this !is Perfil) {
-                        startActivity(Intent(this, Perfil::class.java))
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                        finish()
-                    }
-                    true
-                }
-                R.id.nav_notificaciones -> {
-                    if (this !is Notificaciones) {
-                        startActivity(Intent(this, Notificaciones::class.java))
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                        finish()
-                    }
-                    true
-                }
-                else -> false
             }
+        )
+
+        // Menú -> ViewPager
+        bottomNav.setOnItemSelectedListener { item ->
+            viewPager.currentItem = when (item.itemId) {
+                R.id.nav_notificaciones -> 0
+                R.id.nav_calificaciones -> 1
+                R.id.nav_perfil -> 2
+
+                else -> 1
+            }
+            true
         }
 
-        // Marcar el ítem actual
-        bottomNav.selectedItemId = when (this) {
-            is ContenedorCalificaciones -> R.id.nav_calificaciones
-            is Perfil -> R.id.nav_perfil
-            is Notificaciones -> R.id.nav_notificaciones
-            else -> R.id.nav_calificaciones
-        }
+
+
     }
 }

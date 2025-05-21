@@ -30,7 +30,7 @@ import com.unpa.calificaciones.modelos.Materia
 import com.unpa.calificaciones.services.UsuarioService
 import java.util.LinkedHashMap
 
-class ContenedorCalificaciones : LayoutActivity() {
+class ContenedorCalificaciones : AppCompatActivity() {
 
     private lateinit var adapter: CalificacionAdapter
     private lateinit var ejemploLista : Map<String, List<Materia>>;
