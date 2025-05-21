@@ -1,4 +1,4 @@
-package com.unpa.calificaciones
+/*package com.unpa.calificaciones
 
 import android.content.Intent
 import android.os.Bundle
@@ -161,4 +161,4 @@ class ContenedorCalificaciones : AppCompatActivity() {
 
 
 
-}
+}*/

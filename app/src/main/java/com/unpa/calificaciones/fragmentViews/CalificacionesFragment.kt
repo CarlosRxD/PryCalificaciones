@@ -17,12 +17,14 @@ import com.unpa.calificaciones.services.UsuarioService
 
 class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificaciones) {
     private lateinit var adapter: CalificacionAdapter
-    private lateinit var ejemploLista: Map<String, List<Materia>>
+    private lateinit var ejemploLista: Map<Int, List<Materia>>
     private lateinit var overlay: View
     private lateinit var contenedorSpinner: FrameLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var lblGeneral: TextView
     private lateinit var chipGroup: ChipGroup
+    private lateinit var txtSpinner: TextView
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,7 +35,7 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
         recyclerView = view.findViewById(R.id.vistaCalificaciones)
         lblGeneral = view.findViewById(R.id.lblGeneral)
         chipGroup = view.findViewById(R.id.chipGroupFilters)
-
+        txtSpinner = view.findViewById(R.id.txtSemestreSeleccionado)
         // RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -42,14 +44,7 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
             ?.groupBy { it.semestre }
             ?: emptyMap()
 
-        // Selecciona el semestre más alto por orden lógico
-        val ordenSemestres = listOf(
-            "Primer Semestre", "Segundo Semestre", "Tercer Semestre",
-            "Cuarto Semestre", "Quinto Semestre", "Sexto Semestre",
-            "Séptimo Semestre", "Octavo Semestre", "Noveno Semestre", "Décimo Semestre"
-        )
-        val semestreSeleccionado = ejemploLista.keys
-            .maxByOrNull { ordenSemestres.indexOf(it).coerceAtLeast(0) }
+        val semestreSeleccionado = ejemploLista.keys.first()
 
         // Adaptador inicial
         val materiasIniciales = ejemploLista[semestreSeleccionado].orEmpty()
@@ -110,7 +105,8 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
         }
     }
 
-    private fun actualizarVistaConSemestre(semestre: String) {
+    private fun actualizarVistaConSemestre(semestre: Int) {
+        txtSpinner.text = semestre.toString()
         val materias = ejemploLista[semestre].orEmpty()
         adapter = CalificacionAdapter(materias, 0)
         recyclerView.adapter = adapter

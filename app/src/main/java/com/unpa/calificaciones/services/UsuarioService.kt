@@ -8,10 +8,10 @@ object UsuarioService {
     var alumnoActual: Alumno? = null
 
     // LiveData para observar el semestre seleccionado
-    private val _semestreSeleccionado = MutableLiveData<String>()
-    val semestreSeleccionado: LiveData<String> = _semestreSeleccionado
+    private val _semestreSeleccionado = MutableLiveData<Int>()
+    val semestreSeleccionado: LiveData<Int> = _semestreSeleccionado
 
-    fun seleccionarSemestre(semestre: String) {
-        _semestreSeleccionado.value = semestre
+    fun seleccionarSemestre(semestre: Int) {
+        _semestreSeleccionado.value = semestre;
     }
 }

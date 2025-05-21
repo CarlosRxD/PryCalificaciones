@@ -31,10 +31,9 @@ class CalificacionAdapter(
         val calificacion = calificaciones[position]
         // Configurar título y fecha
         holder.tvTitulo.text = calificacion.materia
-        holder.tvFecha.text = "aplicado: ayer, yo creo" // Esto podrías ajustarlo según tu lógica
 
         if (calificacion.tieneValor(pos)) {
-            holder.tvCalificacion.text = calificacion.getValor(pos)
+            holder.tvCalificacion.text = calificacion.getValor(pos).take(4);
             holder.tvCalificacion.visibility = View.VISIBLE
             holder.tvNoDisponible.visibility = View.GONE
         } else {

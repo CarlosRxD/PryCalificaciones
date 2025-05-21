@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.unpa.calificaciones.R
 import com.unpa.calificaciones.view_holders.SemestreViewHolder
 
-class SemestreAdapter (private val semestre:List<String>,private val onItemClick:(String)-> Unit) :RecyclerView.Adapter<SemestreViewHolder>(){
+class SemestreAdapter (private val semestre:List<Int>,private val onItemClick:(Int)-> Unit) :RecyclerView.Adapter<SemestreViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SemestreViewHolder {
@@ -25,6 +25,6 @@ class SemestreAdapter (private val semestre:List<String>,private val onItemClick
 
         holder.bind(semestre,onItemClick);
 
-        holder.txtSemestre.text = semestre
+        holder.txtSemestre.text = semestre.toString()
     }
 }

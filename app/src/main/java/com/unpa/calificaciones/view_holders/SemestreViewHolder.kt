@@ -8,8 +8,8 @@ import com.unpa.calificaciones.R
 class SemestreViewHolder( private val vista : View):ViewHolder(vista) {
     val txtSemestre: TextView = vista.findViewById(R.id.textView);
 
-    fun bind(semestre:String,onItemClick:(String)-> Unit){
-        txtSemestre.text=semestre;
+    fun bind(semestre:Int,onItemClick:(Int)-> Unit){
+        txtSemestre.text=semestre.toString();
         vista.setOnClickListener{
             onItemClick(semestre);
         }

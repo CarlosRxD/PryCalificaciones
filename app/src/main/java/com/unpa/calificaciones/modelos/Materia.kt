@@ -14,7 +14,7 @@ class Materia() {
     var calificaciones: Notas = Notas()
     var cicloEscolarRef: DocumentReference? = null
     var materia: String = ""
-    var semestre: String = ""
+    var semestre: Int=-1;
 
     /** Constructor secundario para crear instancias manualmente */
     constructor(
@@ -22,7 +22,7 @@ class Materia() {
         calificacion: Notas,
         cicloEscolarRef: DocumentReference?,
         materia: String,
-        semestre: String
+        semestre: Int
     ) : this() {
         this.activo = activo
         this.calificaciones = calificacion

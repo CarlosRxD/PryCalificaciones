@@ -15,14 +15,14 @@ import com.unpa.calificaciones.services.UsuarioService
 class ItemFragment : Fragment() {
 
     private var columnCount = 1
-    private var semestres: List<String> = emptyList()
+    private var semestres: List<Int> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
-            semestres = it.getStringArray(ARG_SEMESTRES)?.toList() ?: emptyList()
+            semestres = it.getIntArray(ARG_SEMESTRES)?.toList() ?: emptyList()
         }
     }
 
@@ -48,7 +48,7 @@ class ItemFragment : Fragment() {
         return view
     }
 
-    private fun onSemestreSeleccionado(semestre: String) {
+    private fun onSemestreSeleccionado(semestre: Int) {
         UsuarioService.seleccionarSemestre(semestre)
         Toast.makeText(context, "Seleccionado: $semestre", Toast.LENGTH_LONG).show()
     }
@@ -58,11 +58,11 @@ class ItemFragment : Fragment() {
         private const val ARG_SEMESTRES = "semestres"
 
         @JvmStatic
-        fun newInstance(columnCount: Int, semestres: List<String>): ItemFragment {
+        fun newInstance(columnCount: Int, semestres: List<Int>): ItemFragment {
             val fragment = ItemFragment()
             val args = Bundle().apply {
                 putInt(ARG_COLUMN_COUNT, columnCount)
-                putStringArray(ARG_SEMESTRES, semestres.toTypedArray())
+                putIntArray(ARG_SEMESTRES, semestres.toIntArray())
             }
             fragment.arguments = args
             return fragment
