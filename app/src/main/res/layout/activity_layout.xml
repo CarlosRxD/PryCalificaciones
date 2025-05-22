@@ -7,23 +7,29 @@
     android:layout_height="match_parent">
 
     <!-- Encabezado con MaterialToolbar -->
+
+    <!-- ViewPager2 para deslizar entre fragments -->
+
     <com.google.android.material.appbar.MaterialToolbar
+        android:paddingHorizontal="30dp"
         android:id="@+id/top_app_bar"
-        android:layout_width="412dp"
-        android:layout_height="71dp"
+        android:layout_width="408dp"
+        android:layout_height="48dp"
         android:background="@color/cardview_light_background"
         android:title="Mi Encabezado"
         android:titleTextColor="@android:color/white"
-        app:menu="@menu/top_app_bar_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:menu="@menu/top_app_bar_menu" />
 
-    <!-- ViewPager2 para deslizar entre fragments -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
-        android:layout_width="412dp"
-        android:layout_height="570dp"
+        android:layout_width="415dp"
+        android:layout_height="602dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +42,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_app_bar"
+        app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

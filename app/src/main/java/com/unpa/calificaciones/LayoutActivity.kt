@@ -51,9 +51,17 @@ class LayoutActivity : AppCompatActivity() {
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     bottomNav.selectedItemId = when (position) {
-                        0 -> R.id.nav_notificaciones
-                        1 -> R.id.nav_calificaciones
-                        2 -> R.id.nav_perfil
+                        0 -> {
+                            toolbar.title = "Notificaciones"
+                            R.id.nav_notificaciones
+                        }
+                        1 -> {
+                            R.id.nav_calificaciones
+                        }
+                        2 -> {
+                            toolbar.title = "Perfil"
+                            R.id.nav_perfil
+                        }
                         else -> R.id.nav_calificaciones
                     }
                 }
@@ -66,7 +74,6 @@ class LayoutActivity : AppCompatActivity() {
                 R.id.nav_notificaciones -> 0
                 R.id.nav_calificaciones -> 1
                 R.id.nav_perfil -> 2
-
                 else -> 1
             }
             true
@@ -88,6 +95,7 @@ class LayoutActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_logout -> {
+                    Toast.makeText(this, "cerrando sesión", Toast.LENGTH_LONG).show()
                     authProvider.logOut()
                     val intento = Intent(this,MainActivity::class.java)
                     startActivity(intento)

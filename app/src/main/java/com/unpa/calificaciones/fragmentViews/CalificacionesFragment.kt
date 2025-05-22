@@ -76,9 +76,21 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
     private fun configurarChips() {
         for (i in 0 until chipGroup.childCount) {
             val chip = chipGroup.getChildAt(i) as Chip
-            chip.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    adapter.setPos(i)
+
+            // Verificamos si hay al menos una materia con calificación válida en ese índice
+            val hayValor = ejemploLista.any { (_, materias) ->
+                materias.any { materia -> materia.tieneValor(i) }
+            }
+
+            // Oculta o muestra el chip dependiendo del resultado
+            chip.visibility = if (hayValor) View.VISIBLE else View.GONE
+
+            // Solo agrega el listener si el chip está visible
+            if (hayValor) {
+                chip.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        adapter.setPos(i)
+                    }
                 }
             }
         }
@@ -111,6 +123,7 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
         // actualizar promedio
         val prom = calcularPromedioGeneral(materias)
         toolbar.title = if (prom > 0) "PromG: %.1f".format(prom) else "PromG: N/A"
+
     }
 
     private fun ocultarSpinnerSiVisible() {
