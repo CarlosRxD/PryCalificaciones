@@ -19,64 +19,39 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/lblGeneral4"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="16dp"
+            android:id="@+id/btnSemestre"
+            android:layout_width="242dp"
+            android:layout_height="43dp"
             android:background="@color/white"
             android:gravity="center|center_vertical"
             android:onClick="llamarFragmento"
+            android:text="Semestre"
             android:textColor="#000000"
             android:textSize="20sp"
             app:backgroundTint="@color/white"
-            app:icon="@drawable/arrow"
-            app:iconGravity="end"
-            app:iconPadding="8dp"
-            app:iconSize="24dp"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/txtSemestreSeleccionado"
-            android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:gravity="right|center"
-            android:text="@string/txtSemestreSeleccionado"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/lblGeneral4"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/lblGeneral"
-            android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:gravity="center_vertical"
-            android:text="@string/lblCali"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="412dp"
+        android:layout_height="56dp"
         android:clipToPadding="false"
         android:fillViewport="false"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPerfil">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroupFilters"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_margin="16dp"
             app:chipSpacingHorizontal="8dp"
             app:selectionRequired="true"
@@ -114,7 +89,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cal. Final" />
-
 
 
         </com.google.android.material.chip.ChipGroup>

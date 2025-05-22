@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.unpa.calificaciones.R
+import com.unpa.calificaciones.services.SemestreStringService
 import com.unpa.calificaciones.view_holders.SemestreViewHolder
 
 class SemestreAdapter (private val semestre:List<Int>,private val onItemClick:(Int)-> Unit) :RecyclerView.Adapter<SemestreViewHolder>(){
@@ -25,6 +26,6 @@ class SemestreAdapter (private val semestre:List<Int>,private val onItemClick:(I
 
         holder.bind(semestre,onItemClick);
 
-        holder.txtSemestre.text = semestre.toString()
+        holder.txtSemestre.text = SemestreStringService.semestres[semestre-1]
     }
 }

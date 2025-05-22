@@ -17,4 +17,8 @@ class AuthProvider {
         return auth.currentUser?.uid
     }
 
+    fun logOut() {
+        return auth.signOut()
+    }
+
 }

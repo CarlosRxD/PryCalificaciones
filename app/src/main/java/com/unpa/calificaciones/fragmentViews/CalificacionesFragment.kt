@@ -7,12 +7,15 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.unpa.calificaciones.ItemFragment
 import com.unpa.calificaciones.R
 import com.unpa.calificaciones.adapters.CalificacionAdapter
 import com.unpa.calificaciones.modelos.Materia
+import com.unpa.calificaciones.services.SemestreStringService
 import com.unpa.calificaciones.services.UsuarioService
 
 class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificaciones) {
@@ -21,25 +24,23 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
     private lateinit var overlay: View
     private lateinit var contenedorSpinner: FrameLayout
     private lateinit var recyclerView: RecyclerView
-    private lateinit var lblGeneral: TextView
     private lateinit var chipGroup: ChipGroup
-    private lateinit var txtSpinner: TextView
+    private lateinit var botonSpinner: MaterialButton
+    private lateinit var toolbar: MaterialToolbar
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Ahora buscamos TODO en el view del fragment
+        toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.top_app_bar)
         overlay = view.findViewById(R.id.blurOverlaySpinner)
         contenedorSpinner = view.findViewById(R.id.contenedorSpinner)   // <<< aquí
         recyclerView = view.findViewById(R.id.vistaCalificaciones)
-        lblGeneral = view.findViewById(R.id.lblGeneral)
         chipGroup = view.findViewById(R.id.chipGroupFilters)
-        txtSpinner = view.findViewById(R.id.txtSemestreSeleccionado)
-        // RecyclerView
+        botonSpinner = view.findViewById(R.id.btnSemestre)
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Llenar la lista agrupada por semestre
         ejemploLista = UsuarioService.alumnoActual?.materias
             ?.groupBy { it.semestre }
             ?: emptyMap()
@@ -53,7 +54,7 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
 
         // Promedio general
         val promedio = calcularPromedioGeneral(materiasIniciales)
-        lblGeneral.text = if (promedio > 0) "PromG: %.1f".format(promedio) else "PromG: N/A"
+        toolbar.title = if (promedio > 0) "PromG: %.1f".format(promedio) else "PromG: N/A"
 
         // Observador de semestre (desde el Service)
         UsuarioService.semestreSeleccionado.observe(viewLifecycleOwner) { semestre ->
@@ -67,7 +68,7 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
         configurarChips()
 
         // Botón de abrir spinner
-        view.findViewById<View>(R.id.lblGeneral4).setOnClickListener {
+        botonSpinner.setOnClickListener {
             llamarFragmento()
         }
     }
@@ -90,10 +91,7 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
         val existing = fm.findFragmentByTag(tag)
         val tx = fm.beginTransaction()
         if (existing != null && existing.isVisible) {
-            // Si ya está visible, lo removemos
-            overlay.visibility = View.GONE
-            tx.remove(existing).commit()
-            contenedorSpinner.visibility = View.INVISIBLE
+           ocultarSpinnerSiVisible()
         } else {
             // Si no, lo agregamos/reemplazamos
             val listaSemestres = ejemploLista.keys.toList().reversed()
@@ -106,13 +104,13 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
     }
 
     private fun actualizarVistaConSemestre(semestre: Int) {
-        txtSpinner.text = semestre.toString()
+        botonSpinner.text = SemestreStringService.semestres[semestre-1]
         val materias = ejemploLista[semestre].orEmpty()
         adapter = CalificacionAdapter(materias, 0)
         recyclerView.adapter = adapter
         // actualizar promedio
         val prom = calcularPromedioGeneral(materias)
-        lblGeneral.text = if (prom > 0) "PromG: %.1f".format(prom) else "PromG: N/A"
+        toolbar.title = if (prom > 0) "PromG: %.1f".format(prom) else "PromG: N/A"
     }
 
     private fun ocultarSpinnerSiVisible() {
