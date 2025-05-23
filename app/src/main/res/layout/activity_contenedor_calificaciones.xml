@@ -7,36 +7,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Encabezado con promedio -->
-
-    <!-- Filtros deslizables -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/tvPerfil"
-        android:layout_width="409dp"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/cardview_light_background"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Botón izquierdo -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnIzquierdo"
+            android:layout_width="48dp"
+            android:layout_height="43dp"
+            app:backgroundTint="@color/white"
+            app:icon="@drawable/ic_back"
+            app:iconTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnSemestre"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Botón central -->
+
+        <!-- Botón derecho -->
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSemestre"
-            android:layout_width="232dp"
-            android:layout_height="30dp"
-            android:background="@color/white"
-            android:gravity="center|center_vertical"
-            android:onClick="llamarFragmento"
+            android:layout_width="226dp"
+            android:layout_height="41dp"
             android:text="Semestre"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textColor="#000000"
             android:textSize="20sp"
+            android:background="@drawable/fondo_selector_semestre"
             app:backgroundTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDerecho"
+            android:layout_width="47dp"
+            android:layout_height="38dp"
+            app:backgroundTint="@color/white"
+            android:gravity="center"
+            app:iconTint="@color/black"
+            app:icon="@drawable/ic_next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnSemestre"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroupFilters"
         android:layout_width="0dp"
@@ -46,9 +74,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="16dp"
         app:singleLine="false"
+        app:selectionRequired="true"
         app:singleSelection="true"
         app:chipSpacingHorizontal="8dp"
-        app:chipSpacingVertical="8dp">
+        app:chipSpacingVertical="4dp">
 
         <!-- Chips aquí -->
         <com.google.android.material.chip.Chip
@@ -70,11 +99,11 @@
             android:layout_height="wrap_content"
             android:text="P3" />
 
-        <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PP" />
+<!--        <com.google.android.material.chip.Chip-->
+<!--            style="@style/Widget.MaterialComponents.Chip.Choice"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="PP" />-->
 
         <com.google.android.material.chip.Chip
             style="@style/Widget.MaterialComponents.Chip.Choice"

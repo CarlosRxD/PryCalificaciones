@@ -1,158 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Perfil"
-    tools:layout_editor_absoluteX="6dp"
-    tools:layout_editor_absoluteY="-208dp">
+    android:id="@+id/main_perfil"
+    android:background="#F4F4F4">
 
-    <!-- Encabezado con promedio -->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/tvPerfil"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="29dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/cuenta" />
-
-        <TextView
-            android:id="@+id/txtSubtitulo"
-            android:layout_width="141dp"
-            android:layout_height="23dp"
-            android:layout_marginStart="4dp"
-            android:text="@string/txtSubtitulo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cntInfo"
-        android:layout_width="378dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="7dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPerfil">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <!-- Información personal -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
-            <TextView
-                android:id="@+id/txtNombreAlumno"
-                android:layout_width="200dp"
-                android:layout_height="21dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:text="TextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <TextView
-                android:id="@+id/txtTipoAlumno"
-                android:layout_width="164dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtNombreAlumno"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <!-- Fila 1: Nombre & Tipo -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/txtNombreAlumno"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Adrián Rubio Alvarado"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
 
-     </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/txtTipoAlumno"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="Estudiante"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/tvSeguridad"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cntInfo">
+                <!-- Fila 2: Matrícula & Semestre -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
 
+                    <TextView
+                        android:id="@+id/txtMatricula"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="20010043"
+                        android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="31dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/cerrar_con_llave" />
+                    <TextView
+                        android:id="@+id/txtSemestreInfo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="8vo"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
+                <!-- Fila 3: Carrera -->
+                <TextView
+                    android:id="@+id/txtCarrera"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ingeniería en computación"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Seguridad -->
         <TextView
-            android:id="@+id/txtSeguridad"
-            android:layout_width="95dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/txtSeguridad"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintVertical_bias="1.0" />
+            android:id="@+id/txtSeguridadTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔒 Seguridad"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="372dp"
-        android:layout_height="111dp"
-        android:layout_marginTop="7dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSeguridad">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:gravity="center_vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="372dp"
-            android:layout_height="111dp">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCambiarPass"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Cambiar mi contraseña"
+                    app:icon="@drawable/ic_lock"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    android:textColor="#000000"
+                    app:cornerRadius="8dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#CCCCCC" />
 
-            <Button
-                android:id="@+id/btnCambiarPass"
-                android:layout_width="344dp"
-                android:layout_height="28dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:text="@string/btnCambiarPass"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.571"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFacebook"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Conectar con Facebook"
+                    app:icon="@drawable/ic_facebook"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    android:textColor="#1877F2"
+                    app:cornerRadius="8dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#1877F2"
+                    android:layout_marginTop="12dp" />
 
-            <Button
-                android:id="@+id/btnConectarFb"
-                android:layout_width="344dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="13dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:text="@string/btnConectarFb"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.571"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnCambiarPass" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGoogle"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Conectar con Google"
+                    app:icon="@drawable/ic_google"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    android:textColor="#DB4437"
+                    app:cornerRadius="8dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#DB4437"
+                    android:layout_marginTop="12dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-    </androidx.cardview.widget.CardView>
+        <!-- Preferencias -->
+        <TextView
+            android:id="@+id/txtPreferenciasTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⚙️ Preferencias"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" />
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/txtModoNocturno"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Modo nocturno"
+                    android:textSize="16sp" />
+
+                <Switch
+                    android:id="@+id/switchNightMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>

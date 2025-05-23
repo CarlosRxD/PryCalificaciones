@@ -15,56 +15,62 @@ import com.unpa.calificaciones.services.UsuarioService
 class ItemFragment : Fragment() {
 
     private var columnCount = 1
-    private var semestres: List<Int> = emptyList()
+    private var semestresPromedios: Map<Int, String> = emptyMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-            semestres = it.getIntArray(ARG_SEMESTRES)?.toList() ?: emptyList()
+        arguments?.let { args ->
+            columnCount = args.getInt(ARG_COLUMN_COUNT, 1)
+            @Suppress("UNCHECKED_CAST")
+            semestresPromedios = (args.getSerializable(ARG_SEMESTRES_PROMEDIOS) as? HashMap<Int, String>)
+                ?: emptyMap()
         }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = if (columnCount <= 1) {
-                    LinearLayoutManager(context)
-                } else {
-                    GridLayoutManager(context, columnCount)
-                }
-                adapter = SemestreAdapter(semestres) { seleccion ->
-                    onSemestreSeleccionado(seleccion)
-                }
-            }
+        val recyclerView = if (view is RecyclerView) {
+            view
+        } else {
+            view.findViewById<RecyclerView>(R.id.list)
         }
+
+        recyclerView.layoutManager = if (columnCount <= 1) {
+            LinearLayoutManager(context)
+        } else {
+            GridLayoutManager(context, columnCount)
+        }
+        recyclerView.adapter = SemestreAdapter(semestresPromedios) { semestre ->
+            onSemestreSeleccionado(semestre)
+        }
+
         return view
     }
 
     private fun onSemestreSeleccionado(semestre: Int) {
         UsuarioService.seleccionarSemestre(semestre)
-        Toast.makeText(context, "Seleccionado: $semestre", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Seleccionado: $semestre", Toast.LENGTH_SHORT).show()
     }
 
     companion object {
         private const val ARG_COLUMN_COUNT = "column-count"
-        private const val ARG_SEMESTRES = "semestres"
+        private const val ARG_SEMESTRES_PROMEDIOS = "semestres-promedios"
 
         @JvmStatic
-        fun newInstance(columnCount: Int, semestres: List<Int>): ItemFragment {
+        fun newInstance(
+            columnCount: Int,
+            semestresPromedios: Map<Int, String>
+        ): ItemFragment {
             val fragment = ItemFragment()
-            val args = Bundle().apply {
+            fragment.arguments = Bundle().apply {
                 putInt(ARG_COLUMN_COUNT, columnCount)
-                putIntArray(ARG_SEMESTRES, semestres.toIntArray())
+                putSerializable(ARG_SEMESTRES_PROMEDIOS, HashMap(semestresPromedios))
             }
-            fragment.arguments = args
             return fragment
         }
     }

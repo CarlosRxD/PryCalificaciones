@@ -59,6 +59,13 @@ class LoginActivity : AppCompatActivity() {
                 }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        if (authProvider.isAlive()){
+            fetchAlumno(authProvider.getId().toString())
+        }
+    }
     private fun showLoading(show: Boolean) {
         val overlay = findViewById<View>(R.id.blurOverlay)
         if (show) {
@@ -80,8 +87,8 @@ class LoginActivity : AppCompatActivity() {
             if (alumno != null) {
                 UsuarioService.alumnoActual = alumno
                 // Alumno encontrado → iniciar la actividad principal
+                UsuarioService.matricula = authProvider.getId()
                 val intent = Intent(this, LayoutActivity::class.java)
-                //intent.putExtra("alumno", alumno)
                 startActivity(intent)
                 finish()
             } else {

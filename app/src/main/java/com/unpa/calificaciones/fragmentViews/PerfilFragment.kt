@@ -8,6 +8,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.unpa.calificaciones.R
+import com.unpa.calificaciones.modelos.Alumno
+import com.unpa.calificaciones.services.SemestreStringService
 import com.unpa.calificaciones.services.UsuarioService
 
 class PerfilFragment : Fragment(R.layout.activity_perfil) {
@@ -22,7 +24,7 @@ class PerfilFragment : Fragment(R.layout.activity_perfil) {
         toolbar.title = "Perfil"
         // Ajuste de inset de sistema
         ViewCompat.setOnApplyWindowInsetsListener(
-            view.findViewById(R.id.main)
+            view.findViewById(R.id.main_perfil)
         ) { v, insets ->
             val sys = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(sys.left, sys.top, sys.right, sys.bottom)
@@ -35,6 +37,12 @@ class PerfilFragment : Fragment(R.layout.activity_perfil) {
                 "${alumno.nombre} ${alumno.apPaterno} ${alumno.apMaterno}"
             view.findViewById<TextView>(R.id.txtTipoAlumno).text =
                 if (alumno.esRegular) "Regular" else "Irregular"
+            view.findViewById<TextView>(R.id.txtMatricula).text=
+                UsuarioService.matricula
+            view.findViewById<TextView>(R.id.txtSemestreInfo).text =
+                SemestreStringService.semestres[UsuarioService.ultimoSemestre-1]
+            view.findViewById<TextView>(R.id.txtCarrera).text =
+                alumno.nombreCarrera
         }
     }
 }

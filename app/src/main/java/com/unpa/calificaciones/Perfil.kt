@@ -14,7 +14,7 @@ class Perfil : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_perfil)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -25,6 +25,7 @@ class Perfil : AppCompatActivity() {
         val nombreTextView = findViewById<TextView>(R.id.txtNombreAlumno)
 
         val tipoAlumno = findViewById<TextView>(R.id.txtTipoAlumno)
+
 
         nombreTextView.text = alumno?.nombre.toString() + " " + alumno?.apPaterno.toString()  + " " + alumno?.apMaterno.toString();
 

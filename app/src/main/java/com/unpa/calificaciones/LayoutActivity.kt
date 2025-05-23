@@ -28,7 +28,7 @@ class LayoutActivity : AppCompatActivity() {
         val viewPager = findViewById<ViewPager2>(R.id.view_pager)
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         toolbar = findViewById<MaterialToolbar>(R.id.top_app_bar)
-
+        makeToolbar()
 
         val fragments = listOf(
             NotificacionFragment() ,
@@ -56,6 +56,7 @@ class LayoutActivity : AppCompatActivity() {
                             R.id.nav_notificaciones
                         }
                         1 -> {
+                            toolbar.title = "Promedio :"
                             R.id.nav_calificaciones
                         }
                         2 -> {

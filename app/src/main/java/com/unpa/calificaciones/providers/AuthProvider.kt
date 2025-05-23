@@ -1,5 +1,6 @@
 package com.unpa.calificaciones.providers
 
+import android.R
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +16,9 @@ class AuthProvider {
     }
     fun getId(): String? {
         return auth.currentUser?.uid
+    }
+    fun isAlive(): Boolean {
+        return auth.currentUser != null
     }
 
     fun logOut() {

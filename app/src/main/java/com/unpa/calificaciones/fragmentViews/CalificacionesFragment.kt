@@ -3,7 +3,7 @@ package com.unpa.calificaciones.fragmentViews
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,71 +26,75 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
     private lateinit var recyclerView: RecyclerView
     private lateinit var chipGroup: ChipGroup
     private lateinit var botonSpinner: MaterialButton
+    private lateinit var botonPrev: MaterialButton
+    private lateinit var botonNext: MaterialButton
+    private var semestreActual = -1
     private lateinit var toolbar: MaterialToolbar
-
+    private lateinit var listaSemestres: List<Int>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.top_app_bar)
+        toolbar = requireActivity().findViewById(R.id.top_app_bar)
         overlay = view.findViewById(R.id.blurOverlaySpinner)
-        contenedorSpinner = view.findViewById(R.id.contenedorSpinner)   // <<< aquí
+        contenedorSpinner = view.findViewById(R.id.contenedorSpinner)
         recyclerView = view.findViewById(R.id.vistaCalificaciones)
         chipGroup = view.findViewById(R.id.chipGroupFilters)
         botonSpinner = view.findViewById(R.id.btnSemestre)
+        botonPrev = view.findViewById(R.id.btnIzquierdo)
+        botonNext = view.findViewById(R.id.btnDerecho)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        // Agrupo materias por semestre y genero lista ordenada
         ejemploLista = UsuarioService.alumnoActual?.materias
             ?.groupBy { it.semestre }
             ?: emptyMap()
+        listaSemestres = ejemploLista.keys.sorted()
 
-        val semestreSeleccionado = ejemploLista.keys.first()
+        // Semestre inicial: el último disponible
+        semestreActual = listaSemestres.lastOrNull() ?: 1
+        UsuarioService.seleccionarSemestre(semestreActual)
+        UsuarioService.ultimoSemestre = semestreActual
 
-        // Adaptador inicial
-        val materiasIniciales = ejemploLista[semestreSeleccionado].orEmpty()
-        adapter = CalificacionAdapter(materiasIniciales, 0)
-        recyclerView.adapter = adapter
-
-        // Promedio general
-        val promedio = calcularPromedioGeneral(materiasIniciales)
-        toolbar.title = if (promedio > 0) "PromG: %.1f".format(promedio) else "PromG: N/A"
-
-        // Observador de semestre (desde el Service)
+        // Observador de cambio de semestre
         UsuarioService.semestreSeleccionado.observe(viewLifecycleOwner) { semestre ->
             semestre?.let {
-                actualizarVistaConSemestre(it)
+                semestreActual = it
+                actualizarVistaConSemestre()
                 ocultarSpinnerSiVisible()
             }
         }
 
-        // Configurar filtros (chips)
-        configurarChips()
+        // Inicializar vista
+        actualizarVistaConSemestre()
 
-        // Botón de abrir spinner
-        botonSpinner.setOnClickListener {
-            llamarFragmento()
+        // Botón de abrir selector
+        botonSpinner.setOnClickListener { llamarFragmento() }
+
+        // Navegación anterior
+        botonPrev.setOnClickListener {
+            if (tieneAnterior()) {
+                UsuarioService.seleccionarSemestre(listaSemestres[listaSemestres.indexOf(semestreActual) - 1])
+            }
+        }
+        // Navegación siguiente
+        botonNext.setOnClickListener {
+            if (tieneSiguiente()) {
+                UsuarioService.seleccionarSemestre(listaSemestres[listaSemestres.indexOf(semestreActual) + 1])
+            }
         }
     }
 
     private fun configurarChips() {
         for (i in 0 until chipGroup.childCount) {
             val chip = chipGroup.getChildAt(i) as Chip
-
-            // Verificamos si hay al menos una materia con calificación válida en ese índice
-            val hayValor = ejemploLista.any { (_, materias) ->
-                materias.any { materia -> materia.tieneValor(i) }
-            }
-
-            // Oculta o muestra el chip dependiendo del resultado
+            val hayValor = ejemploLista[semestreActual]?.any { it.tieneValor(i) } == true
             chip.visibility = if (hayValor) View.VISIBLE else View.GONE
-
-            // Solo agrega el listener si el chip está visible
+            chip.isChecked = (i == 0) && hayValor
             if (hayValor) {
                 chip.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked) {
-                        adapter.setPos(i)
-                    }
+                    if (isChecked) adapter.setPos(i)
                 }
             }
         }
@@ -101,36 +105,46 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
         val fm = parentFragmentManager
         val tag = "ItemFragmentTag"
         val existing = fm.findFragmentByTag(tag)
-        val tx = fm.beginTransaction()
-        if (existing != null && existing.isVisible) {
-           ocultarSpinnerSiVisible()
-        } else {
-            // Si no, lo agregamos/reemplazamos
-            val listaSemestres = ejemploLista.keys.toList().reversed()
-            val fragmento = ItemFragment.newInstance(1, listaSemestres)
-            tx.replace(R.id.contenedorSpinner, fragmento, tag)
-                .addToBackStack(null)
-                .commit()
-            contenedorSpinner.visibility = View.VISIBLE
+        fm.beginTransaction().apply {
+            if (existing != null && existing.isVisible) {
+                ocultarSpinnerSiVisible()
+            } else {
+                val fragmento = ItemFragment.newInstance(1,generarMapaSemestres())
+                replace(R.id.contenedorSpinner, fragmento, tag)
+                addToBackStack(null)
+                commit()
+                contenedorSpinner.visibility = View.VISIBLE
+            }
         }
     }
 
-    private fun actualizarVistaConSemestre(semestre: Int) {
-        botonSpinner.text = SemestreStringService.semestres[semestre-1]
-        val materias = ejemploLista[semestre].orEmpty()
-        adapter = CalificacionAdapter(materias, 0)
+    private fun actualizarVistaConSemestre() {
+        botonSpinner.text = SemestreStringService.semestres[semestreActual - 1]
+        adapter = CalificacionAdapter(ejemploLista[semestreActual].orEmpty(), 0)
         recyclerView.adapter = adapter
-        // actualizar promedio
-        val prom = calcularPromedioGeneral(materias)
-        toolbar.title = if (prom > 0) "PromG: %.1f".format(prom) else "PromG: N/A"
+        toolbar.title = calcularPromedioGeneral(ejemploLista[semestreActual].orEmpty())
+            .takeIf { it > 0 }?.let { "PromG: %.1f".format(it) } ?: "PromG: N/A"
+        configurarChips()
+        botonPrev.isEnabled = tieneAnterior()
+        botonNext.isEnabled = tieneSiguiente()
+        botonPrev.isVisible = tieneAnterior()
+        botonNext.isVisible = tieneSiguiente()
+    }
 
+    private fun tieneAnterior(): Boolean {
+        val idx = listaSemestres.indexOf(semestreActual)
+        return idx > 0
+    }
+
+    private fun tieneSiguiente(): Boolean {
+        val idx = listaSemestres.indexOf(semestreActual)
+        return idx >= 0 && idx < listaSemestres.size - 1
     }
 
     private fun ocultarSpinnerSiVisible() {
         overlay.visibility = View.GONE
-        val fm = parentFragmentManager
-        fm.findFragmentByTag("ItemFragmentTag")?.let {
-            fm.beginTransaction().remove(it).commit()
+        parentFragmentManager.findFragmentByTag("ItemFragmentTag")?.let {
+            parentFragmentManager.beginTransaction().remove(it).commit()
             contenedorSpinner.visibility = View.GONE
         }
     }
@@ -146,4 +160,16 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
         }
         return if (cnt > 0) suma / cnt else 0.0
     }
+    private fun generarMapaSemestres(): Map<Int, String> {
+        return ejemploLista.mapValues { (_, materias) ->
+            val promedios = materias.mapNotNull { it.calificaciones.calcularPromedio() }
+            if (promedios.isNotEmpty()) {
+                val promedio = promedios.average()
+                if (promedio == 0.0) "N/A" else "%.1f".format(promedio)
+            } else {
+                "N/A"
+            }
+        }
+    }
+
 }

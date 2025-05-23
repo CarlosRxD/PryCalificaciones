@@ -11,9 +11,9 @@ import com.unpa.calificaciones.view_holders.CalificacionViewHolder
 
 class CalificacionAdapter(
     private val calificaciones: List<Materia>,
-    private var pos: Int // Mantén 'pos' como var para poder modificarlo
+    private var pos: Int
 ) : RecyclerView.Adapter<CalificacionViewHolder>() {
-
+    private var listaFiltrada : List<Materia> = calificaciones
     // Crear el ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalificacionViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -23,12 +23,12 @@ class CalificacionAdapter(
 
     // Devuelve el número de elementos
     override fun getItemCount(): Int {
-        return calificaciones.size
+        return listaFiltrada.size
     }
 
     // Enlazar el dato al ViewHolder
     override fun onBindViewHolder(holder: CalificacionViewHolder, position: Int) {
-        val calificacion = calificaciones[position]
+        val calificacion = listaFiltrada[position]
         // Configurar título y fecha
         holder.tvTitulo.text = calificacion.materia
 
@@ -45,7 +45,11 @@ class CalificacionAdapter(
         if (pos != newPos) {
             pos = newPos
             notifyItemRangeChanged(0, itemCount)
+            filtrarCalificaciones()
         }
+    }
+    fun filtrarCalificaciones(){
+        listaFiltrada = calificaciones.filter { cal -> cal.tieneValor(pos) }
     }
 
 }
