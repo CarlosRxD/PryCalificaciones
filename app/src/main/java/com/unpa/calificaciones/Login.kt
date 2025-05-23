@@ -58,14 +58,12 @@ class LoginActivity : AppCompatActivity() {
                     Log.e("LoginError", "Error al iniciar sesión: ${ex.message}", ex)
                 }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
         if (authProvider.isAlive()){
+            showLoading(true)
             fetchAlumno(authProvider.getId().toString())
         }
     }
+
     private fun showLoading(show: Boolean) {
         val overlay = findViewById<View>(R.id.blurOverlay)
         if (show) {

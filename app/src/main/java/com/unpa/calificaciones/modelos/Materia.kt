@@ -40,6 +40,24 @@ class Materia() {
     fun getValor(indice: Int): String {
         return calificaciones.getNotaPorIndice(indice).orEmpty()
     }
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Materia) return false
+
+        return materia == other.materia &&
+                semestre == other.semestre &&
+                activo == other.activo &&
+                calificaciones == other.calificaciones
+    }
+
+    override fun hashCode(): Int {
+        var result = materia.hashCode()
+        result = 31 * result + semestre
+        result = 31 * result + activo.hashCode()
+        result = 31 * result + calificaciones.hashCode()
+        return result
+    }
+
 }
 
 /**

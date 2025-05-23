@@ -45,6 +45,32 @@ class Notas() {
             null
         }
     }
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Notas) return false
+
+        return parcial1 == other.parcial1 &&
+                parcial2 == other.parcial2 &&
+                parcial3 == other.parcial3 &&
+                ordinario == other.ordinario &&
+                pFinal == other.pFinal &&
+                extraOrdinario1 == other.extraOrdinario1 &&
+                extraOrdinario2 == other.extraOrdinario2 &&
+                especial == other.especial
+    }
+
+    override fun hashCode(): Int {
+        var result = parcial1?.hashCode() ?: 0
+        result = 31 * result + (parcial2?.hashCode() ?: 0)
+        result = 31 * result + (parcial3?.hashCode() ?: 0)
+        result = 31 * result + (ordinario?.hashCode() ?: 0)
+        result = 31 * result + (pFinal?.hashCode() ?: 0)
+        result = 31 * result + (extraOrdinario1?.hashCode() ?: 0)
+        result = 31 * result + (extraOrdinario2?.hashCode() ?: 0)
+        result = 31 * result + (especial?.hashCode() ?: 0)
+        return result
+    }
+
 
 
 }

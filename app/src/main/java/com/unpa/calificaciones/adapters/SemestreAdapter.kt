@@ -13,7 +13,7 @@ class SemestreAdapter(
 ) : RecyclerView.Adapter<SemestreViewHolder>() {
 
     // Guardar lista ordenada de semestres
-    private val semestreList = semestresPromedios.keys.sorted()
+    private val semestreList = semestresPromedios.keys.sorted().reversed()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SemestreViewHolder {
         val view = LayoutInflater.from(parent.context)

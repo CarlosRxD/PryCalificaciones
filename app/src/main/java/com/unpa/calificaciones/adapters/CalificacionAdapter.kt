@@ -1,8 +1,6 @@
 package com.unpa.calificaciones.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.unpa.calificaciones.R
@@ -13,43 +11,28 @@ class CalificacionAdapter(
     private val calificaciones: List<Materia>,
     private var pos: Int
 ) : RecyclerView.Adapter<CalificacionViewHolder>() {
-    private var listaFiltrada : List<Materia> = calificaciones
-    // Crear el ViewHolder
+
+    private var listaFiltrada: List<Materia> = calificaciones.filter { it.tieneValor(pos) }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalificacionViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.calificacion_simple, parent, false)
         return CalificacionViewHolder(view)
     }
 
-    // Devuelve el número de elementos
-    override fun getItemCount(): Int {
-        return listaFiltrada.size
-    }
+    override fun getItemCount(): Int = listaFiltrada.size
 
-    // Enlazar el dato al ViewHolder
     override fun onBindViewHolder(holder: CalificacionViewHolder, position: Int) {
-        val calificacion = listaFiltrada[position]
-        // Configurar título y fecha
-        holder.tvTitulo.text = calificacion.materia
-
-        if (calificacion.tieneValor(pos)) {
-            holder.tvCalificacion.text = calificacion.getValor(pos).take(4);
-            holder.tvCalificacion.visibility = View.VISIBLE
-            holder.tvNoDisponible.visibility = View.GONE
-        } else {
-            holder.tvCalificacion.visibility = View.GONE
-            holder.tvNoDisponible.visibility = View.VISIBLE
-        }
+        holder.bind(listaFiltrada[position], pos)
     }
+
     fun setPos(newPos: Int) {
-        if (pos != newPos) {
-            pos = newPos
-            notifyItemRangeChanged(0, itemCount)
-            filtrarCalificaciones()
-        }
-    }
-    fun filtrarCalificaciones(){
-        listaFiltrada = calificaciones.filter { cal -> cal.tieneValor(pos) }
-    }
+        if (pos == newPos) return
 
+        pos = newPos
+        listaFiltrada = calificaciones.filter { it.tieneValor(pos) }
+
+        // Solo notificar que se actualizó el contenido visual
+        notifyDataSetChanged()
+    }
 }

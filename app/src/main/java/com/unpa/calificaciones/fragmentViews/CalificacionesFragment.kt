@@ -87,18 +87,42 @@ class CalificacionesFragment : Fragment(R.layout.activity_contenedor_calificacio
     }
 
     private fun configurarChips() {
+        chipGroup.setOnCheckedChangeListener(null) // Limpia listeners previos
+
         for (i in 0 until chipGroup.childCount) {
             val chip = chipGroup.getChildAt(i) as Chip
             val hayValor = ejemploLista[semestreActual]?.any { it.tieneValor(i) } == true
+
             chip.visibility = if (hayValor) View.VISIBLE else View.GONE
-            chip.isChecked = (i == 0) && hayValor
-            if (hayValor) {
-                chip.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked) adapter.setPos(i)
+            chip.text = SemestreStringService.chipLabels[i]
+            chip.tag = i
+        }
+
+        // Selecciona por defecto el primer chip visible
+        val primerChipVisible = (0 until chipGroup.childCount)
+            .firstOrNull { chipGroup.getChildAt(it).visibility == View.VISIBLE }
+
+        primerChipVisible?.let {
+            val chip = chipGroup.getChildAt(it) as Chip
+            chip.isChecked = true
+            adapter.setPos(chip.tag as Int)
+            chip.text = SemestreStringService.activeChipLabels[chip.tag as Int]
+        }
+
+        chipGroup.setOnCheckedChangeListener { group, checkedId ->
+            for (i in 0 until group.childCount) {
+                val chip = group.getChildAt(i) as Chip
+                val index = chip.tag as Int
+                if (chip.id == checkedId) {
+                    chip.text = SemestreStringService.activeChipLabels[index]
+                    adapter.setPos(index)
+                } else {
+                    chip.text = SemestreStringService.chipLabels[index]
                 }
             }
         }
     }
+
 
     private fun llamarFragmento() {
         overlay.visibility = View.VISIBLE
